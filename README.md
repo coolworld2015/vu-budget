@@ -1,4 +1,4 @@
-# vu-test
+# vu-budget
 
 > A Vue.js project
 
