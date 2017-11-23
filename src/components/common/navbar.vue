@@ -3,15 +3,15 @@
 		<nav class="h-100 fp-navbar" onclick="event.preventDefault();return false">
 			<ul class="h-100 fp-nav-right">
 				<li v-on:click="changeView()">  
-					<img src="../../assets/img/logo.jpg" style="width1: 250px; height: 50px; margin-right: 10px; margin-top: -5px;" 
+					<img src="../../assets/img/logo.jpg" style="width: 60px; height: 50px; margin-right: 10px; margin-top: -5px;" 
 						v-on:click="changeView()" 
 					/>  
 					<span style="font-weight: bold; color: white; font-size: 20px; text-shadow: #000 0.15em 0.15em 0.15em;">
-						Base 09 
+						Budget 
 					</span>
 				</li>  								 
 				<li class="fp-nav-item fp-nav-item-right">
-				  <a class="fp-nav-link menu-block-header" href="#">Base 09</a>
+				  <a class="fp-nav-link menu-block-header" href="#">Budget</a>
 				</li>				
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('phones')" 
@@ -40,7 +40,7 @@
 			
 			<ul class="h-100 fp-nav-left">
 				<li class="fp-nav-item fp-nav-item-left li-border-bottom" v-on:click="changeView()">
-					<a class="fp-nav-link" href="#" id="showNav" title="Base 09">09</a>
+					<a class="fp-nav-link" href="#" id="showNav" title="Base 09">BD</a>
 					<span class="hot-key-hint">~</span>
 				</li>
 				<li class="fp-nav-item fp-nav-item-left">
