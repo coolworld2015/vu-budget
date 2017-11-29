@@ -7,13 +7,13 @@
   </div>
 
   <div v-else-if="status === 'show'" class="search-results-content">
-    <div class="payment" v-for="item in items"
-         v-bind:class="{ selected: (item.id == selectedItem && clicked)}"
-         v-on:click="selectItem(item.id)">
+    <div class="payment" v-for="item in items" v-on:click="showDetails(item)">
       <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
- 
-      <div class="search-results-item search-results-sender" style="width: 45%;">{{ item.name }}</div>
-      <div class="search-results-item search-results-transfer" style="width: 45%;">{{((+item.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+
+      <div class="search-results-item search-results-sender" style="width: 25%;">{{ item.name }}</div>
+      <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+      <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+	        <div class="search-results-item search-results-transfer" style="width: 20%;">{{ item.description }}</div>
 
     </div>
   </div>
@@ -31,7 +31,7 @@ import Vue from 'vue';
 import appConfig from '../../main';
 
 export default {
-	name: 'assets-items',
+	name: 'resources-items',
 	data() {
 	  return {
 		items: [],
@@ -39,8 +39,7 @@ export default {
 		recordsCount: 20,
 		positionY: 0,
 		status: 'loading',
-        clicked: false,
-        selectedItem: ''
+		clicked: false
 	  }
 	},
 	created() {
@@ -52,7 +51,7 @@ export default {
 		}
 		appConfig.$on('searchQuery', searchQuery => {
 			this.searchQuery = searchQuery;
-			var arr = [].concat(appConfig.assets.items);
+			var arr = [].concat(appConfig.resources.items);
 			var items = arr.filter((el) => el.name.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1);
 			this.filteredItems = items;
 			this.items = items.slice(0, 20);
@@ -61,8 +60,8 @@ export default {
 			
 			appConfig.$emit('itemsCount', items.length);
 			if (searchQuery == '') {
-				this.items = appConfig.assets.items.slice(0, 20);
-				this.filteredItems = appConfig.assets.items;
+				this.items = appConfig.resources.items.slice(0, 20);
+				this.filteredItems = appConfig.resources.items;
 			}
 		})
 	},
@@ -70,7 +69,7 @@ export default {
 		fetchData() {
 			this.$http.get(appConfig.URL + 'goods/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {
-					appConfig.assets.items = result.data.sort(this.sort);
+					appConfig.resources.items = result.data.sort(this.sort);
 					this.items = result.data.sort(this.sort).slice(0, 20);
 					this.filteredItems = result.data.sort(this.sort);
 					this.status = 'show';
@@ -94,13 +93,13 @@ export default {
 				this.positionY = positionY + 400;
 			}
 		},
-		selectItem(id) {
-			this.selectedItem = id;
-			this.clicked = !this.clicked;
-		},
-		onItem() {
-			this.clicked = !this.clicked;
-		},		
+		onItem(item) {
+			if (this.clicked) {
+				this.clicked = false;
+			} else {
+				this.clicked = true;
+			}
+		},			
 		showDetails(item){
 			appConfig.user = item;
 			this.$router.push('user-edit');

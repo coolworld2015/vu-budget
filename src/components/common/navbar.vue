@@ -18,12 +18,12 @@
 					v-bind:class="{ active: assets }">
 					<a class="fp-nav-link" href="#">Assets</a>
 				</li>				
-<!--				
-				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('phones')" 
-					v-bind:class="{ active: find }">
-					<a class="fp-nav-link" href="#">Search</a>
+ 				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('resources')" 
+					v-bind:class="{ active: resources }">
+					<a class="fp-nav-link" href="#">Resources</a>
 				</li>
--->
+ 
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('audits')" 
 					v-bind:class="{ active: audits }">
 					<a class="fp-nav-link" href="#">Audits</a>
@@ -53,13 +53,13 @@
 					<a class="fp-nav-link" href="#" title="assets">AS</a>
 					<span class="hot-key-hint">2</span>
 				</li>				
-<!--				
-				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('phones')" 
-					v-bind:class="{ active: find }">
-					<a class="fp-nav-link" href="#" title="Find">SR</a>
+ 				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('resources')" 
+					v-bind:class="{ active: resources }">
+					<a class="fp-nav-link" href="#" title="Find">RE</a>
 					<span class="hot-key-hint">2</span>
 				</li>
--->
+ 
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('audits')" 
 					v-bind:class="{ active: audits }">
 					<a class="fp-nav-link" href="#" title="Audits">AU</a>
@@ -91,7 +91,7 @@ export default {
 				route: appConfig.route,
 				isActive: false,
 				assets: null,
-				find: null,
+				resources: null,
 				audits: null,
 				users: null,
 				login: null,
@@ -116,10 +116,10 @@ export default {
 						this.assets = false;
 					}					
 					
-					if (this.route == 'Phones') {
-						this.phones = true;
+					if (this.route == 'Resources') {
+						this.resources = true;
 					} else {
-						this.phones = false;
+						this.resources = false;
 					}
 					
 					if (this.route == 'Audits') {
@@ -170,18 +170,14 @@ export default {
 						this.test5 = false;
 					}					
 
-
 				},				
-				changeView() {
-					console.log(this.route)
-					
+				changeView() {			
 					if (this.isActive !== false) {
 						this.isActive = false;
 					}
 					else {
 						this.isActive = true;
 					}
-
 				},
 				searchClear() {
 					this.searchQuery = '';

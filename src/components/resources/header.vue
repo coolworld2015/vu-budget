@@ -9,10 +9,10 @@
 
     <div class="search-results-header">
       <div class="search-results-item search-results-choose" style="width: 5%;"></div>
- 
-      <div class="search-results-item search-results-product"style="width: 45%; right: 0px;">Name</div>
-      <div class="search-results-item search-results-sender" style="width: 45%; padding-left: 0px;">Quantity</div>
- 
+      <div class="search-results-item search-results-sender" style="width: 25%; padding-left: 20px;">Name</div>
+      <div class="search-results-item search-results-product"style="width: 20%; right: 0px;">Price</div>
+      <div class="search-results-item search-results-sender" style="width: 20%; padding-left: 10px;">Quantity</div>
+      <div class="search-results-item search-results-amount" style="width: 20%; right: 0px;">Description</div>
 
 
     </div>
@@ -23,7 +23,7 @@
   import appConfig from '../../main';
 
   export default {
-    name: 'assets-header',
+    name: 'resources-header',
     data() {
       return {
         searchQuery: ''
