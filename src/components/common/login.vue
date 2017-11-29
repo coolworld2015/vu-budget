@@ -7,7 +7,7 @@
 					box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5); text-align: center;">
 				<div class="col-sm-12 d-flex flex-column justify-content-around">
 					<form class="align-self-center login-form" autocomplete="off">
-						<p class="h5" style="font-weight: bold; color: #B50032; font-size: 24px;">Budget</p>
+						<p class="h5" style="font-weight: bold; color1: #B50032; font-size: 24px;">Budget</p>
 						<img src="../../assets/img/logo.jpg" style="margin-bottom: 10px; width: 100px;"> 
 						<input v-model="name" type="text" class="form-control login-input" id="user" placeholder="Login">
 						<input v-model="pass" type="text" class="form-control login-input" id="password" placeholder="Password">
@@ -44,7 +44,7 @@ export default {
 		fetchData() {
 			this.loading = true;
 			this.error = false;
-			this.$http.post('https://jwt-base.herokuapp.com/api/login', 
+			this.$http.post('https://jwt-budget.herokuapp.com/api/login', 
 				{
 					name: this.name,
 					pass: this.pass,
@@ -54,7 +54,7 @@ export default {
 					appConfig.access_token = result.body.token;
 					this.loading = false;
 					this.error = false;
-					this.$router.push('/phones');
+					this.$router.push('/users');
 				})
 				.catch((error)=> {
 					this.loading = false;

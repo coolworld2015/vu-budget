@@ -64,8 +64,7 @@
     },
     methods: {
       fetchData() {
-        this.$http.get('https://jwt-base.herokuapp.com/api/audit/get', {headers: {'Authorization': appConfig.access_token}})
-        //this.$http.get('http://localhost:3000/api/audit/get')
+        this.$http.get(appConfig.URL + 'audit/get', {headers: {'Authorization': appConfig.access_token}})
           .then(result => {
             appConfig.audits.items = result.data;
             this.items = result.data.slice(0, 20);
@@ -87,13 +86,9 @@
         items = this.filteredItems.slice(0, recordsCount);
 
         if (position > positionY) {
-          //console.log(items.length);
-          //console.log(position);
-
           this.items = items;
           this.recordsCount = recordsCount + 10;
           this.positionY = positionY + 400;
-
         }
       },
       selectItem(id) {

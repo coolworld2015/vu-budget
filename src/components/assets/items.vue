@@ -7,12 +7,13 @@
   </div>
 
   <div v-else-if="status === 'show'" class="search-results-content">
-    <div class="payment" v-for="item in items" v-on:click="showDetails(item)">
+    <div class="payment" v-for="item in items"
+         v-bind:class="{ selected: (item.id == selectedItem && clicked)}"
+         v-on:click="selectItem(item.id)">
       <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
-      <div class="search-results-item search-results-transfer" style="width: 25%;">{{ item.id }}</div>
-      <div class="search-results-item search-results-sender" style="width: 20%;">{{ item.name }}</div>
-      <div class="search-results-item search-results-transfer" style="width: 20%;">{{ item.pass }}</div>
-      <div class="search-results-item search-results-transfer" style="width: 20%;">{{ item.description }}</div>
+ 
+      <div class="search-results-item search-results-sender" style="width: 45%;">{{ item.name }}</div>
+      <div class="search-results-item search-results-transfer" style="width: 45%;">{{((+item.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
 
     </div>
   </div>
@@ -38,7 +39,8 @@ export default {
 		recordsCount: 20,
 		positionY: 0,
 		status: 'loading',
-		clicked: false
+        clicked: false,
+        selectedItem: ''
 	  }
 	},
 	created() {
@@ -66,7 +68,7 @@ export default {
 	},
 	methods: {
 		fetchData() {
-			this.$http.get(appConfig.URL + 'users/get', {headers: {'Authorization': appConfig.access_token}})
+			this.$http.get(appConfig.URL + 'goods/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {
 					appConfig.users.items = result.data.sort(this.sort);
 					this.items = result.data.sort(this.sort).slice(0, 20);
@@ -92,13 +94,13 @@ export default {
 				this.positionY = positionY + 400;
 			}
 		},
-		onItem(item) {
-			if (this.clicked) {
-				this.clicked = false;
-			} else {
-				this.clicked = true;
-			}
-		},			
+		selectItem(id) {
+			this.selectedItem = id;
+			this.clicked = !this.clicked;
+		},
+		onItem() {
+			this.clicked = !this.clicked;
+		},		
 		showDetails(item){
 			appConfig.user = item;
 			this.$router.push('user-edit');

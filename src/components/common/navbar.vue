@@ -14,9 +14,9 @@
 				  <a class="fp-nav-link menu-block-header" href="#">Budget</a>
 				</li>				
 				
-				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('phones')" 
-					v-bind:class="{ active: phones }">
-					<a class="fp-nav-link" href="#">Phones</a>
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('assets')" 
+					v-bind:class="{ active: assets }">
+					<a class="fp-nav-link" href="#">Assets</a>
 				</li>				
 <!--				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('phones')" 
@@ -48,9 +48,9 @@
 				  <span class="hot-key-hint">1</span>
 				</li>
 				
-				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('phones')" 
-					v-bind:class="{ active: phones }">
-					<a class="fp-nav-link" href="#" title="Phones">PH</a>
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('assets')" 
+					v-bind:class="{ active: assets }">
+					<a class="fp-nav-link" href="#" title="assets">AS</a>
 					<span class="hot-key-hint">2</span>
 				</li>				
 <!--				
@@ -90,7 +90,7 @@ export default {
 				searchQuery: '',
 				route: appConfig.route,
 				isActive: false,
-				phones: null,
+				assets: null,
 				find: null,
 				audits: null,
 				users: null,
@@ -110,10 +110,10 @@ export default {
 			},	
 			methods: {
 				init() {			
-					if (this.route == 'Payments') {
-						this.find = true;
+					if (this.route == 'Assets') {
+						this.assets = true;
 					} else {
-						this.find = false;
+						this.assets = false;
 					}					
 					
 					if (this.route == 'Phones') {
