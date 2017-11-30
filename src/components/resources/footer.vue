@@ -39,7 +39,7 @@
 import appConfig from '../../main';
 
 export default {
-	name: 'users-footer',
+	name: 'resources-footer',
 	data() {
 	  return {
 		count: 0
@@ -52,7 +52,7 @@ export default {
 	},
 	methods: {		
 		addItem(){
-			this.$router.push('user-add');
+			this.$router.push('resource-add');
 		}	
 	}
 }

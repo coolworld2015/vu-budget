@@ -101,8 +101,8 @@ export default {
 			}
 		},			
 		showDetails(item){
-			appConfig.user = item;
-			this.$router.push('user-edit');
+			appConfig.resource = item;
+			this.$router.push('resource-edit');
 		},
 		sort(a, b) {
 			let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();

@@ -21,8 +21,16 @@
           </div>
 
           <div class="form-group">
-            <label for="senderName">Password</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Password" v-model="pass">
+            <label for="senderName">Price</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Price" v-model="price">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label for="senderName">Quantity</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
@@ -53,7 +61,7 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'users-edit',
+	name: 'resources-edit',
 	data() {
 		return {
 			name: '',
@@ -64,8 +72,8 @@ export default {
 		}
 	},
 	created() {
-		if (!appConfig.user) {
-			this.$router.push('/users');
+		if (!appConfig.resource) {
+			this.$router.push('/resources');
 		} else {
 			this.setData();
 			this.notification = {
@@ -86,27 +94,29 @@ export default {
 	methods: {
 		setData() {
 			if (appConfig) {
-				if (appConfig.user) {
-					this.id = appConfig.user.id;
-					this.name = appConfig.user.name;
-					this.pass = appConfig.user.pass;
-					this.description = appConfig.user.description;
+				if (appConfig.resource) {
+					this.id = appConfig.resource.id;
+					this.name = appConfig.resource.name;
+					this.price = appConfig.resource.price;
+					this.quantity = appConfig.resource.quantity;
+					this.store = appConfig.resource.store;
+					this.description = appConfig.resource.description;
 				}
 			}
 		},
 		goBack() {
-			this.$router.push('/users');
+			this.$router.push('/resources');
 		},
 		deleteConfirm() {
 			appConfig.$emit('showModal', {
 			  elName: 'modal-confirmation',
 			  confirm: this.deleteItem,
-			  html: `Are you sure want to delete user <span class="confirm-amount">${ this.name }?</span>`
+			  html: `Are you sure want to delete resource <span class="confirm-amount">${ this.name }?</span>`
 			})
 		},
 		deleteItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'users/delete', {
+			this.$http.post(appConfig.URL + 'goods/delete', {
 				id: this.id,
 				authorization: appConfig.access_token
 			})
@@ -116,19 +126,21 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification1);
 				}
-				this.$router.push('/users');
+				this.$router.push('/resources');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/users');
+				this.$router.push('/resources');
 			})
 		},
 		updateItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'users/update', {                
+			this.$http.post(appConfig.URL + 'goods/update', {                
 				id: this.id,
 				name: this.name,
-				pass: this.pass,
+				price: this.price,
+				quantity: this.quantity,
+				store: this.store,
 				description: this.description,
 				authorization: appConfig.access_token
 			})
@@ -138,11 +150,11 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification2);
 				}
-				this.$router.push('/users');
+				this.$router.push('/resources');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/users');
+				this.$router.push('/resources');
 			})
 		},
 	}
