@@ -53,7 +53,7 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'resources-add',
+	name: 'projects-add',
 	data() {
 		return {
 			name: '',
@@ -81,7 +81,7 @@ export default {
 	},
 	methods: {
 		goBack() {
-			this.$router.push('/resources');
+			this.$router.push('/projects');
 		},
 		addItem() {
 			this.loading = true;
@@ -100,11 +100,11 @@ export default {
 					} else {
 						appConfig.notifications.items.push(this.notification1);
 					}
-					this.$router.push('/resources');
+					this.$router.push('/projects');
 				})
 				.catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
-					this.$router.push('/resources');
+					this.$router.push('/projects');
 				})
 		}
 	}

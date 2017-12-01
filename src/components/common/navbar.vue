@@ -22,6 +22,11 @@
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('resources')" 
 					v-bind:class="{ active: resources }">
 					<a class="fp-nav-link" href="#">Resources</a>
+				</li> 		
+				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('projects')" 
+					v-bind:class="{ active: projects }">
+					<a class="fp-nav-link" href="#">Projects</a>
 				</li>
  
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('audits')" 
@@ -56,7 +61,13 @@
  				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('resources')" 
 					v-bind:class="{ active: resources }">
-					<a class="fp-nav-link" href="#" title="Find">RE</a>
+					<a class="fp-nav-link" href="#" title="Resources">RE</a>
+					<span class="hot-key-hint">2</span>
+				</li> 				
+				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('projects')" 
+					v-bind:class="{ active: projects }">
+					<a class="fp-nav-link" href="#" title="Projects">PR</a>
 					<span class="hot-key-hint">2</span>
 				</li>
  
@@ -91,6 +102,7 @@ export default {
 				route: appConfig.route,
 				isActive: false,
 				assets: null,
+				projects: null,
 				resources: null,
 				audits: null,
 				users: null,
@@ -120,6 +132,12 @@ export default {
 						this.resources = true;
 					} else {
 						this.resources = false;
+					}
+					
+					if (this.route == 'Projects') {
+						this.projects = true;
+					} else {
+						this.projects = false;
 					}
 					
 					if (this.route == 'Audits') {

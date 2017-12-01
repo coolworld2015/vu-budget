@@ -6,6 +6,10 @@ import Login from '@/components/common/login';
 
 import Assets from '@/components/assets/assets';
 
+import Projects from '@/components/projects/projects';
+import ProjectEdit from '@/components/projects/edit';
+import ProjectAdd from '@/components/projects/add';
+
 import Resources from '@/components/resources/resources';
 import ResourceEdit from '@/components/resources/edit';
 import ResourceAdd from '@/components/resources/add';
@@ -24,10 +28,14 @@ export default new Router({
 	
     { path: '/assets', component: Assets },
 	
+	{ path: '/projects', component: Projects },
+    { path: '/project-edit', component: ProjectEdit },
+    { path: '/project-add', component: ProjectAdd },
+	
     { path: '/resources', component: Resources },
     { path: '/resource-edit', component: ResourceEdit },
-    { path: '/resource-add', component: ResourceAdd },
-	
+    { path: '/resource-add', component: ResourceAdd },	
+
     { path: '/users', component: Users },
     { path: '/user-edit', component: UserEdit },
     { path: '/user-add', component: UserAdd },

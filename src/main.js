@@ -16,6 +16,7 @@ appConfig.URL ='https://jwt-budget.herokuapp.com/api/',
 appConfig.route ='Users',
 
 appConfig.assets = { items: [] };
+appConfig.projects = { items: [] };
 appConfig.resources = { items: [] };
 appConfig.users = { items: [] };
 appConfig.audits = { items: [] };
