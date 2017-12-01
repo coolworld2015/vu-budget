@@ -13,8 +13,8 @@
       <fieldset class="sender-data form-section-wrapper">
         <div class="form-section" style="width: 100%;">
           <div class="form-group">
-            <label for="senderSurname">Login</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="Login" v-model="name">
+            <label for="senderSurname">Name</label>
+            <input type="text" class="form-control" id="senderSurname" placeholder="Name" v-model="name" readonly>
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть прізвище відправника.
             </div>
@@ -27,14 +27,6 @@
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
           </div>
-		  
-          <div class="form-group">
-            <label for="senderName">Quantity</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть ім'я відправника.
-            </div>
-          </div>
 
           <div class="form-group">
             <label for="senderPatronymic">Description</label>
@@ -43,7 +35,15 @@
               Будь ласка, коректно вкажіть по-батькові відправника.
             </div>
           </div>
- 
+		  
+          <div class="form-group">
+            <label for="senderName">Quantity</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+
 		  <div class="d-flex justify-content-center" style="margin-top: 30px;">
 			<button class="btn btn-danger" v-on:click="updateItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
 			<button class="btn btn-danger" v-on:click="deleteConfirm" style="margin: 10px; width: 100px; font-size: 14px;">Delete</button>
@@ -97,8 +97,8 @@ export default {
 				if (appConfig.resource) {
 					this.id = appConfig.resource.id;
 					this.name = appConfig.resource.name;
-					this.price = appConfig.resource.price;
-					this.quantity = appConfig.resource.quantity;
+					this.price = ((+appConfig.resource.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.quantity = ((+appConfig.resource.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 					this.store = appConfig.resource.store;
 					this.description = appConfig.resource.description;
 				}
@@ -138,8 +138,8 @@ export default {
 			this.$http.post(appConfig.URL + 'goods/update', {                
 				id: this.id,
 				name: this.name,
-				price: this.price,
-				quantity: this.quantity,
+				price: appConfig.resource.price,
+				quantity: appConfig.resource.quantity,
 				store: this.store,
 				description: this.description,
 				authorization: appConfig.access_token

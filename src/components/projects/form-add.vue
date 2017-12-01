@@ -7,7 +7,7 @@
 
   <div v-else>
 	<div style="margin: auto; width: 25%; font-size: 22px; font-weight: bold; margin-bottom: 10px;">
-		<div style="text-align: center; padding-right: 40px;">New resource</div>
+		<div style="text-align: center; padding-right: 40px;">New project</div>
 	</div>
     <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
       <fieldset class="sender-data form-section-wrapper">
@@ -21,8 +21,16 @@
           </div>
 
           <div class="form-group">
-            <label for="senderName">Price</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Price" v-model="price">
+            <label for="senderName">Address</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Address" v-model="address">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label for="senderName">Phone</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Phone" v-model="phone">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
@@ -57,15 +65,10 @@ export default {
 	data() {
 		return {
 			name: '',
-			price: '',
+			address: '',
+			phone: '',
 			description: '',
-			amount: '',
-			role: '',
-			pnfp: '',
-			receiverPhone: '',
-			receiverPhoneErr: false,
-			loading: false,
-			status: ''
+			loading: false
 		}
 	},
 	created() {
@@ -85,12 +88,12 @@ export default {
 		},
 		addItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'goods/add', {                
+			this.$http.post(appConfig.URL + 'projects/add', {                
 					id: + new Date,
 					name: this.name,
-					price: this.price,
-					quantity: '0.00',
-					store: false,
+					address: this.address,
+					phone: this.phone,
+					sum: '0.00',
 					description: this.description,
 					authorization: appConfig.access_token
 				})

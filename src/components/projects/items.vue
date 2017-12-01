@@ -10,10 +10,8 @@
     <div class="payment" v-for="item in items" v-on:click="showDetails(item)">
       <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
 
-      <div class="search-results-item search-results-sender" style="width: 25%;">{{ item.name }}</div>
-      <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
-      <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
-	        <div class="search-results-item search-results-transfer" style="width: 20%;">{{ item.description }}</div>
+      <div class="search-results-item search-results-sender" style="width: 45%;">{{ item.name }}</div>
+      <div class="search-results-item search-results-transfer" style="width: 45%;">{{((+item.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
 
     </div>
   </div>

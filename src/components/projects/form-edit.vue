@@ -13,34 +13,42 @@
       <fieldset class="sender-data form-section-wrapper">
         <div class="form-section" style="width: 100%;">
           <div class="form-group">
-            <label for="senderSurname">Login</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="Login" v-model="name">
+            <label for="senderSurname">Name</label>
+            <input type="text" class="form-control" id="senderSurname" placeholder="Name" v-model="name" readonly>
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть прізвище відправника.
             </div>
           </div>
 
           <div class="form-group">
-            <label for="senderName">Price</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Price" v-model="price">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть ім'я відправника.
-            </div>
-          </div>
-		  
-          <div class="form-group">
-            <label for="senderName">Quantity</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity">
+            <label for="senderName">Address</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Address" v-model="address">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
           </div>
 
           <div class="form-group">
+            <label for="senderPatronymic">Phone</label>
+            <input type="text" class="form-control" id="senderPatronymic1" placeholder="Phone" v-model="phone">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть по-батькові відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
             <label for="senderPatronymic">Description</label>
             <input type="text" class="form-control" id="senderPatronymic1" placeholder="Description" v-model="description">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть по-батькові відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label for="senderName">Total</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Total" v-model="sum" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
             </div>
           </div>
  
@@ -65,14 +73,15 @@ export default {
 	data() {
 		return {
 			name: '',
-			pass: '',
+			address: '',
+			phone: '',
 			description: '',
-			amount: '',
+			sum: '',
 			loading: false
 		}
 	},
 	created() {
-		if (!appConfig.resource) {
+		if (!appConfig.project) {
 			this.$router.push('/projects');
 		} else {
 			this.setData();
@@ -94,13 +103,13 @@ export default {
 	methods: {
 		setData() {
 			if (appConfig) {
-				if (appConfig.resource) {
-					this.id = appConfig.resource.id;
-					this.name = appConfig.resource.name;
-					this.price = appConfig.resource.price;
-					this.quantity = appConfig.resource.quantity;
-					this.store = appConfig.resource.store;
-					this.description = appConfig.resource.description;
+				if (appConfig.project) {
+					this.id = appConfig.project.id;
+					this.name = appConfig.project.name;
+					this.address = appConfig.project.address;
+					this.phone = appConfig.project.phone;
+					this.sum = ((+appConfig.project.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.description = appConfig.project.description;
 				}
 			}
 		},
@@ -116,7 +125,7 @@ export default {
 		},
 		deleteItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'goods/delete', {
+			this.$http.post(appConfig.URL + 'projects/delete', {
 				id: this.id,
 				authorization: appConfig.access_token
 			})
@@ -135,12 +144,12 @@ export default {
 		},
 		updateItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'goods/update', {                
+			this.$http.post(appConfig.URL + 'projects/update', {                
 				id: this.id,
 				name: this.name,
-				price: this.price,
-				quantity: this.quantity,
-				store: this.store,
+				phone: this.phone,
+				address: this.address,
+				sum: appConfig.project.sum,
 				description: this.description,
 				authorization: appConfig.access_token
 			})
