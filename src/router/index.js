@@ -10,6 +10,10 @@ import Projects from '@/components/projects/projects';
 import ProjectEdit from '@/components/projects/edit';
 import ProjectAdd from '@/components/projects/add';
 
+import Departments from '@/components/departments/departments';
+import DepartmentEdit from '@/components/departments/edit';
+import DepartmentAdd from '@/components/departments/add';
+
 import Resources from '@/components/resources/resources';
 import ResourceEdit from '@/components/resources/edit';
 import ResourceAdd from '@/components/resources/add';
@@ -30,7 +34,11 @@ export default new Router({
 	
 	{ path: '/projects', component: Projects },
     { path: '/project-edit', component: ProjectEdit },
-    { path: '/project-add', component: ProjectAdd },
+    { path: '/project-add', component: ProjectAdd },	
+	
+	{ path: '/departments', component: Departments },
+    { path: '/department-edit', component: DepartmentEdit },
+    { path: '/department-add', component: DepartmentAdd },
 	
     { path: '/resources', component: Resources },
     { path: '/resource-edit', component: ResourceEdit },

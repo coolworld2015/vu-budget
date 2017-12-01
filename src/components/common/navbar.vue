@@ -18,17 +18,22 @@
 					v-bind:class="{ active: assets }">
 					<a class="fp-nav-link" href="#">Assets</a>
 				</li>				
- 				
-				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('resources')" 
-					v-bind:class="{ active: resources }">
-					<a class="fp-nav-link" href="#">Resources</a>
-				</li> 		
-				
+			
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('projects')" 
 					v-bind:class="{ active: projects }">
 					<a class="fp-nav-link" href="#">Projects</a>
+				</li>		
+				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('departments')" 
+					v-bind:class="{ active: departments }">
+					<a class="fp-nav-link" href="#">Departments</a>
 				</li>
- 
+  				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('resources')" 
+					v-bind:class="{ active: resources }">
+					<a class="fp-nav-link" href="#">Resources</a>
+				</li> 	
+				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('audits')" 
 					v-bind:class="{ active: audits }">
 					<a class="fp-nav-link" href="#">Audits</a>
@@ -55,22 +60,28 @@
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('assets')" 
 					v-bind:class="{ active: assets }">
-					<a class="fp-nav-link" href="#" title="assets">AS</a>
+					<a class="fp-nav-link" href="#" title="Assets">AS</a>
 					<span class="hot-key-hint">2</span>
 				</li>				
  				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('projects')" 
+					v-bind:class="{ active: projects }">
+					<a class="fp-nav-link" href="#" title="Projects">PR</a>
+					<span class="hot-key-hint">2</span>
+				</li> 				
+				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('departments')" 
+					v-bind:class="{ active: departments }">
+					<a class="fp-nav-link" href="#" title="Departments">DE</a>
+					<span class="hot-key-hint">2</span>
+				</li>
+				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('resources')" 
 					v-bind:class="{ active: resources }">
 					<a class="fp-nav-link" href="#" title="Resources">RE</a>
 					<span class="hot-key-hint">2</span>
 				</li> 				
-				
-				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('projects')" 
-					v-bind:class="{ active: projects }">
-					<a class="fp-nav-link" href="#" title="Projects">PR</a>
-					<span class="hot-key-hint">2</span>
-				</li>
- 
+
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('audits')" 
 					v-bind:class="{ active: audits }">
 					<a class="fp-nav-link" href="#" title="Audits">AU</a>
@@ -103,6 +114,7 @@ export default {
 				isActive: false,
 				assets: null,
 				projects: null,
+				departments: null,
 				resources: null,
 				audits: null,
 				users: null,
@@ -128,16 +140,22 @@ export default {
 						this.assets = false;
 					}					
 					
-					if (this.route == 'Resources') {
-						this.resources = true;
-					} else {
-						this.resources = false;
-					}
-					
 					if (this.route == 'Projects') {
 						this.projects = true;
 					} else {
 						this.projects = false;
+					}		
+					
+					if (this.route == 'Departments') {
+						this.departments = true;
+					} else {
+						this.departments = false;
+					}
+										
+					if (this.route == 'Resources') {
+						this.resources = true;
+					} else {
+						this.resources = false;
 					}
 					
 					if (this.route == 'Audits') {

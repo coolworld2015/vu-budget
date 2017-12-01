@@ -17,6 +17,7 @@ appConfig.route ='Users',
 
 appConfig.assets = { items: [] };
 appConfig.projects = { items: [] };
+appConfig.departments = { items: [] };
 appConfig.resources = { items: [] };
 appConfig.users = { items: [] };
 appConfig.audits = { items: [] };
