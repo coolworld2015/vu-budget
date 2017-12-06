@@ -27,6 +27,11 @@
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('departments')" 
 					v-bind:class="{ active: departments }">
 					<a class="fp-nav-link" href="#">Departments</a>
+				</li>			
+				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('employees')" 
+					v-bind:class="{ active: employees }">
+					<a class="fp-nav-link" href="#">Employees</a>
 				</li>
   				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('resources')" 
@@ -74,6 +79,12 @@
 					v-bind:class="{ active: departments }">
 					<a class="fp-nav-link" href="#" title="Departments">DE</a>
 					<span class="hot-key-hint">2</span>
+				</li>	
+				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('employees')" 
+					v-bind:class="{ active: employees }">
+					<a class="fp-nav-link" href="#" title="Employees">EM</a>
+					<span class="hot-key-hint">2</span>
 				</li>
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('resources')" 
@@ -115,6 +126,7 @@ export default {
 				assets: null,
 				projects: null,
 				departments: null,
+				employees: null,
 				resources: null,
 				audits: null,
 				users: null,
@@ -129,11 +141,10 @@ export default {
 			  }
 			},
 			created() {
-				//console.log('appConfig ' + appConfig.route);
 				this.init();
 			},	
 			methods: {
-				init() {			
+				init() {
 					if (this.route == 'Assets') {
 						this.assets = true;
 					} else {
@@ -150,6 +161,12 @@ export default {
 						this.departments = true;
 					} else {
 						this.departments = false;
+					}					
+					
+					if (this.route == 'Employees') {
+						this.employees = true;
+					} else {
+						this.employees = false;
 					}
 										
 					if (this.route == 'Resources') {

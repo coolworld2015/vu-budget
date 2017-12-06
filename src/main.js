@@ -13,11 +13,11 @@ import './assets/css/font-awesome-4.7.0/css/font-awesome.min.css';
 
 const appConfig = new Vue();
 appConfig.URL ='https://jwt-budget.herokuapp.com/api/',
-appConfig.route ='Users',
 
 appConfig.assets = { items: [] };
 appConfig.projects = { items: [] };
 appConfig.departments = { items: [] };
+appConfig.employees = { items: [] };
 appConfig.resources = { items: [] };
 appConfig.users = { items: [] };
 appConfig.audits = { items: [] };

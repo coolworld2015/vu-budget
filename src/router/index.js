@@ -14,6 +14,10 @@ import Departments from '@/components/departments/departments';
 import DepartmentEdit from '@/components/departments/edit';
 import DepartmentAdd from '@/components/departments/add';
 
+import Employees from '@/components/employees/employees';
+import EmployeeEdit from '@/components/employees/edit';
+import EmployeeAdd from '@/components/employees/add';
+
 import Resources from '@/components/resources/resources';
 import ResourceEdit from '@/components/resources/edit';
 import ResourceAdd from '@/components/resources/add';
@@ -39,6 +43,10 @@ export default new Router({
 	{ path: '/departments', component: Departments },
     { path: '/department-edit', component: DepartmentEdit },
     { path: '/department-add', component: DepartmentAdd },
+	
+	{ path: '/employees', component: Employees },
+    { path: '/employee-edit', component: EmployeeEdit },
+    { path: '/employee-add', component: EmployeeAdd },
 	
     { path: '/resources', component: Resources },
     { path: '/resource-edit', component: ResourceEdit },
