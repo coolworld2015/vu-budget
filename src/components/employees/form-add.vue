@@ -93,6 +93,8 @@ export default {
 					name: this.name,
 					address: this.address,
 					phone: this.phone,
+					department: 'Department 1',
+					departmentID: '1512138271357',
 					sum: '0.00',
 					description: this.description,
 					authorization: appConfig.access_token

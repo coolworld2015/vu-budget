@@ -154,7 +154,7 @@ export default {
 				authorization: appConfig.access_token
 			})
 			.then(result => {
-				if (result.body.errors) {
+				if (result.body.error) {
 				appConfig.notifications.items.push(this.notification);
 				} else {
 				appConfig.notifications.items.push(this.notification2);

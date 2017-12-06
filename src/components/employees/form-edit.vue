@@ -69,7 +69,7 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'departments-edit',
+	name: 'employees-edit',
 	data() {
 		return {
 			name: '',
@@ -81,8 +81,8 @@ export default {
 		}
 	},
 	created() {
-		if (!appConfig.department) {
-			this.$router.push('/departments');
+		if (!appConfig.employee) {
+			this.$router.push('/employees');
 		} else {
 			this.setData();
 			this.notification = {
@@ -103,18 +103,20 @@ export default {
 	methods: {
 		setData() {
 			if (appConfig) {
-				if (appConfig.department) {
-					this.id = appConfig.department.id;
-					this.name = appConfig.department.name;
-					this.address = appConfig.department.address;
-					this.phone = appConfig.department.phone;
-					this.sum = ((+appConfig.department.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-					this.description = appConfig.department.description;
+				if (appConfig.employee) {
+					this.id = appConfig.employee.id;
+					this.name = appConfig.employee.name;
+					this.address = appConfig.employee.address;
+					this.phone = appConfig.employee.phone;
+					this.department = appConfig.employee.department;
+					this.departmentID = appConfig.employee.departmentID;
+					this.sum = ((+appConfig.employee.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.description = appConfig.employee.description;
 				}
 			}
 		},
 		goBack() {
-			this.$router.push('/departments');
+			this.$router.push('/employees');
 		},
 		deleteConfirm() {
 			appConfig.$emit('showModal', {
@@ -125,7 +127,7 @@ export default {
 		},
 		deleteItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'departments/delete', {
+			this.$http.post(appConfig.URL + 'employees/delete', {
 				id: this.id,
 				authorization: appConfig.access_token
 			})
@@ -135,16 +137,16 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification1);
 				}
-				this.$router.push('/departments');
+				this.$router.push('/employees');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/departments');
+				this.$router.push('/employees');
 			})
 		},
 		updateItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'departments/update', {                
+			this.$http.post(appConfig.URL + 'employees/update', {                
 				id: this.id,
 				name: this.name,
 				phone: this.phone,
@@ -154,16 +156,16 @@ export default {
 				authorization: appConfig.access_token
 			})
 			.then(result => {
-				if (result.body.errors) {
+				if (result.body.error) {
 				appConfig.notifications.items.push(this.notification);
 				} else {
 				appConfig.notifications.items.push(this.notification2);
 				}
-				this.$router.push('/departments');
+				this.$router.push('/employees');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/departments');
+				this.$router.push('/employees');
 			})
 		},
 	}

@@ -55,7 +55,7 @@
 			
 			<ul class="h-100 fp-nav-left">
 				<li class="fp-nav-item fp-nav-item-left li-border-bottom" v-on:click="changeView()">
-					<a class="fp-nav-link" href="#" id="showNav" title="Base 09">BD</a>
+					<a class="fp-nav-link" href="#" id="showNav" title="Base 09">BU</a>
 					<span class="hot-key-hint">~</span>
 				</li>
 				<li class="fp-nav-item fp-nav-item-left">
