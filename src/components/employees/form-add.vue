@@ -12,14 +12,24 @@
     <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
       <fieldset class="sender-data form-section-wrapper">
         <div class="form-section" style="width: 100%;">
-          <div class="form-group">
+          
+		  <div class="form-group">
+            <label for="typeId">Department</label>
+			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment">
+			  <option v-for="option in departments" v-bind:value="option.id" v-bind:data-name="option.name">
+				{{ option.name }}
+			  </option>
+			</select>
+          </div>        
+		  
+		  <div class="form-group">
             <label for="senderSurname">Name</label>
             <input type="text" class="form-control" id="senderSurname" placeholder="Name" v-model="name">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть прізвище відправника.
             </div>
           </div>
-
+		  
           <div class="form-group">
             <label for="senderName">Address</label>
             <input type="text" class="form-control" id="senderName" placeholder="Address" v-model="address">
@@ -68,10 +78,14 @@ export default {
 			address: '',
 			phone: '',
 			description: '',
-			loading: false
+			loading: true,
+			departments: [{id:0, name:'Select department'}],
+			departmentName: '',
+			departmentID: 0,
 		}
 	},
 	created() {
+		this.getDepartments();
 		this.notification = {
 			title: 'Something went wrong',
 			message: 'Server responded with status code error',
@@ -86,6 +100,17 @@ export default {
 		goBack() {
 			this.$router.push('/employees');
 		},
+		getDepartments() {
+			this.$http.get(appConfig.URL + 'departments/get', {headers: {'Authorization': appConfig.access_token}})
+				.then(result => {			 
+					this.departments = result.data.sort(this.sort);
+					this.departments.unshift({id:0, name:'Select department'});
+					this.loading = false;
+				}).catch((error)=> {
+					appConfig.notifications.items.push(this.notification);
+					this.loading = false;
+				})
+		},
 		addItem() {
 			this.loading = true;
 			this.$http.post(appConfig.URL + 'employees/add', {                
@@ -93,8 +118,8 @@ export default {
 					name: this.name,
 					address: this.address,
 					phone: this.phone,
-					department: 'Department 1',
-					departmentID: '1512138271357',
+					department: this.departmentName,
+					departmentID: this.departmentID,
 					sum: '0.00',
 					description: this.description,
 					authorization: appConfig.access_token
@@ -111,7 +136,12 @@ export default {
 					appConfig.notifications.items.push(this.notification);
 					this.$router.push('/employees');
 				})
-		}
+		},
+	    changeDepartment (e) {
+			if(e.target.options.selectedIndex > -1) {
+				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
+			}
+		  },	
 	}
 }
 </script>

@@ -21,6 +21,14 @@
           </div>
 
           <div class="form-group">
+            <label for="senderName">Department</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Department" v-model="department" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
             <label for="senderName">Address</label>
             <input type="text" class="form-control" id="senderName" placeholder="Address" v-model="address">
             <div class="invalid-feedback">
@@ -151,7 +159,9 @@ export default {
 				name: this.name,
 				phone: this.phone,
 				address: this.address,
-				sum: appConfig.department.sum,
+				department: appConfig.employee.department,
+				departmentID: appConfig.employee.departmentID,
+				sum: appConfig.employee.sum,
 				description: this.description,
 				authorization: appConfig.access_token
 			})
