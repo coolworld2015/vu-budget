@@ -1,0 +1,183 @@
+<template>
+  <div v-if="loading">
+    <div style="position: relative; top: 100px; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box; font-size:54px">
+      <img src="../../assets/img/loading.gif">
+    </div>
+  </div>
+
+  <div v-else>
+	<div style="margin: auto; width: 25%; font-size: 22px; font-weight: bold; margin-bottom: 10px;">
+		<div style="text-align: center; padding-right: 40px;">{{ name }}</div>
+	</div>
+    <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
+      <fieldset class="sender-data form-section-wrapper">
+        <div class="form-section" style="width: 100%;">
+          <div class="form-group">
+            <label for="senderSurname">Name</label>
+            <input type="text" class="form-control" id="senderSurname" placeholder="Name" v-model="name" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть прізвище відправника.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="senderName">Department</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Department" v-model="department" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label for="senderName">Address</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Address" v-model="address">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="senderPatronymic">Phone</label>
+            <input type="text" class="form-control" id="senderPatronymic1" placeholder="Phone" v-model="phone">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть по-батькові відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label for="senderPatronymic">Description</label>
+            <input type="text" class="form-control" id="senderPatronymic1" placeholder="Description" v-model="description">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть по-батькові відправника.
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label for="senderName">Total</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Total" v-model="sum" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+ 
+		  <div class="d-flex justify-content-center" style="margin-top: 30px;">
+			<button class="btn btn-danger" v-on:click="updateItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
+			<button class="btn btn-danger" v-on:click="deleteConfirm" style="margin: 10px; width: 100px; font-size: 14px;">Delete</button>
+		  </div>
+ 
+        </div>
+      </fieldset>
+    </form>
+
+  </div>
+</template>
+
+<script>
+import appConfig from '../../main';
+import navbar from '@/components/common/navbar';
+
+export default {
+	name: 'employees-edit',
+	data() {
+		return {
+			name: '',
+			address: '',
+			phone: '',
+			description: '',
+			sum: '',
+			loading: false
+		}
+	},
+	created() {
+		if (!appConfig.employee) {
+			this.$router.push('/employees');
+		} else {
+			this.setData();
+			this.notification = {
+				title: 'Something went wrong',
+				message: 'Server responded with status code error',
+				important: true
+			}
+			this.notification1 = {
+				title: 'Item deleted',
+				message: `Item was deleted successfully`
+			}			
+			this.notification2 = {
+				title: 'Item updated',
+				message: `Item was updated successfully`
+			}
+		}
+	},
+	methods: {
+		setData() {
+			if (appConfig) {
+				if (appConfig.employee) {
+					this.id = appConfig.employee.id;
+					this.name = appConfig.employee.name;
+					this.address = appConfig.employee.address;
+					this.phone = appConfig.employee.phone;
+					this.department = appConfig.employee.department;
+					this.departmentID = appConfig.employee.departmentID;
+					this.sum = ((+appConfig.employee.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.description = appConfig.employee.description;
+				}
+			}
+		},
+		goBack() {
+			this.$router.push('/employees');
+		},
+		deleteConfirm() {
+			appConfig.$emit('showModal', {
+			  elName: 'modal-confirmation',
+			  confirm: this.deleteItem,
+			  html: `Are you sure want to delete resource <span class="confirm-amount">${ this.name }?</span>`
+			})
+		},
+		deleteItem() {
+			this.loading = true;
+			this.$http.post(appConfig.URL + 'employees/delete', {
+				id: this.id,
+				authorization: appConfig.access_token
+			})
+			.then(result => {
+				if (result.body.error) {
+				appConfig.notifications.items.push(this.notification);
+				} else {
+				appConfig.notifications.items.push(this.notification1);
+				}
+				this.$router.push('/employees');
+			})
+			.catch((error)=> {
+				appConfig.notifications.items.push(this.notification);
+				this.$router.push('/employees');
+			})
+		},
+		updateItem() {
+			this.loading = true;
+			this.$http.post(appConfig.URL + 'employees/update', {                
+				id: this.id,
+				name: this.name,
+				phone: this.phone,
+				address: this.address,
+				department: appConfig.employee.department,
+				departmentID: appConfig.employee.departmentID,
+				sum: appConfig.employee.sum,
+				description: this.description,
+				authorization: appConfig.access_token
+			})
+			.then(result => {
+				if (result.body.error) {
+				appConfig.notifications.items.push(this.notification);
+				} else {
+				appConfig.notifications.items.push(this.notification2);
+				}
+				this.$router.push('/employees');
+			})
+			.catch((error)=> {
+				appConfig.notifications.items.push(this.notification);
+				this.$router.push('/employees');
+			})
+		},
+	}
+}
+</script>

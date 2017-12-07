@@ -6,6 +6,10 @@ import Login from '@/components/common/login';
 
 import Assets from '@/components/assets/assets';
 
+import Inputs from '@/components/inputs/inputs';
+import InputEdit from '@/components/inputs/edit';
+import InputAdd from '@/components/inputs/add';
+
 import Projects from '@/components/projects/projects';
 import ProjectEdit from '@/components/projects/edit';
 import ProjectAdd from '@/components/projects/add';
@@ -35,6 +39,10 @@ export default new Router({
     { path: '/login', component: Login },
 	
     { path: '/assets', component: Assets },
+	
+	{ path: '/inputs', component: Inputs },
+    { path: '/input-edit', component: InputEdit },
+    { path: '/input-add', component: InputAdd },		
 	
 	{ path: '/projects', component: Projects },
     { path: '/project-edit', component: ProjectEdit },

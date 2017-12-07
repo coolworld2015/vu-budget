@@ -18,6 +18,21 @@
 					v-bind:class="{ active: assets }">
 					<a class="fp-nav-link" href="#">Assets</a>
 				</li>				
+				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('reports')" 
+					v-bind:class="{ active: reports }">
+					<a class="fp-nav-link" href="#">Reports</a>
+				</li>			
+				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('inputs')" 
+					v-bind:class="{ active: inputs }">
+					<a class="fp-nav-link" href="#">Inputs</a>
+				</li>			
+				
+				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('outputs')" 
+					v-bind:class="{ active: outputs }">
+					<a class="fp-nav-link" href="#">Outputs</a>
+				</li>				
 			
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('projects')" 
 					v-bind:class="{ active: projects }">
@@ -66,6 +81,24 @@
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('assets')" 
 					v-bind:class="{ active: assets }">
 					<a class="fp-nav-link" href="#" title="Assets">AS</a>
+					<span class="hot-key-hint">2</span>
+				</li>		
+				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('reports')" 
+					v-bind:class="{ active: reports }">
+					<a class="fp-nav-link" href="#" title="Reports">RT</a>
+					<span class="hot-key-hint">2</span>
+				</li>					
+				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('inputs')" 
+					v-bind:class="{ active: inputs }">
+					<a class="fp-nav-link" href="#" title="Inputs">IN</a>
+					<span class="hot-key-hint">2</span>
+				</li>					
+				
+				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('outputs')" 
+					v-bind:class="{ active: outputs }">
+					<a class="fp-nav-link" href="#" title="Outputs">OU</a>
 					<span class="hot-key-hint">2</span>
 				</li>				
  				
@@ -124,6 +157,8 @@ export default {
 				route: appConfig.route,
 				isActive: false,
 				assets: null,
+				reports: null,
+				inputs: null,
 				projects: null,
 				departments: null,
 				employees: null,
@@ -150,6 +185,24 @@ export default {
 					} else {
 						this.assets = false;
 					}					
+					
+					if (this.route == 'Inputs') {
+						this.inputs = true;
+					} else {
+						this.inputs = false;
+					}			
+					
+					if (this.route == 'Reports') {
+						this.reports = true;
+					} else {
+						this.reports = false;
+					}	
+					
+					if (this.route == 'Outputs') {
+						this.outputs = true;
+					} else {
+						this.outputs = false;
+					}	
 					
 					if (this.route == 'Projects') {
 						this.projects = true;

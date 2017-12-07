@@ -94,7 +94,6 @@
       selectItem(id) {
         this.selectedItem = id;
         this.clicked = !this.clicked;
-        console.log(this.selectedItem)
       },
       onItem() {
         this.clicked = !this.clicked;
