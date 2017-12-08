@@ -16,6 +16,7 @@ appConfig.URL ='https://jwt-budget.herokuapp.com/api/',
 
 appConfig.assets = { items: [] };
 appConfig.inputs = { items: [] };
+appConfig.outputs = { items: [] };
 appConfig.projects = { items: [] };
 appConfig.departments = { items: [] };
 appConfig.employees = { items: [] };

@@ -9,8 +9,11 @@
 
     <div class="search-results-header">
       <div class="search-results-item search-results-choose" style="width: 5%;"></div>
-      <div class="search-results-item search-results-sender" style="width: 45%; padding-left: 20px;">Name</div>
-      <div class="search-results-item search-results-amount" style="width: 45%; right: 0px;">Total</div>
+			<div class="search-results-item search-results-sender" style="width: 15%; padding-left: 10px;">ID</div>
+			<div class="search-results-item search-results-product"style="width: 20%; padding-left: 0px;">Project</div>
+			<div class="search-results-item search-results-transfer" style="width: 20%; padding-left: 0px;">Date</div>
+			<div class="search-results-item search-results-amount" style="width: 20%; padding-left: 0px;">Description</div>
+      <div class="search-results-item search-results-amount" style="width: 20%; right: 0px;">Total</div>
 
 
     </div>

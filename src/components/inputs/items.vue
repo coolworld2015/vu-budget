@@ -10,8 +10,11 @@
     <div class="payment" v-for="item in items" v-on:click="showDetails(item)">
       <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
 
-      <div class="search-results-item search-results-sender" style="width: 45%;">{{ item.name }}</div>
-      <div class="search-results-item search-results-transfer" style="width: 45%;">{{((+item.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+      <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
+      <div class="search-results-item search-results-sender" style="width: 20%;">{{ item.project }}</div>
+      <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
+      <div class="search-results-item search-results-sender" style="width: 20%;">{{ item.description }}</div>
+      <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
 
     </div>
   </div>
@@ -29,7 +32,7 @@ import Vue from 'vue';
 import appConfig from '../../main';
 
 export default {
-	name: 'employees-items',
+	name: 'inputs-items',
 	data() {
 	  return {
 		items: [],
@@ -49,7 +52,7 @@ export default {
 		}
 		appConfig.$on('searchQuery', searchQuery => {
 			this.searchQuery = searchQuery;
-			var arr = [].concat(appConfig.employees.items);
+			var arr = [].concat(appConfig.inputs.items);
 			var items = arr.filter((el) => el.name.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1);
 			this.filteredItems = items;
 			this.items = items.slice(0, 20);
@@ -58,22 +61,23 @@ export default {
 			
 			appConfig.$emit('itemsCount', items.length);
 			if (searchQuery == '') {
-				this.items = appConfig.employees.items.slice(0, 20);
-				this.filteredItems = appConfig.employees.items;
+				this.items = appConfig.inputs.items.slice(0, 20);
+				this.filteredItems = appConfig.inputs.items;
 			}
 		})
 	},
 	methods: {
 		fetchData() {
-			this.$http.get(appConfig.URL + 'employees/get', {headers: {'Authorization': appConfig.access_token}})
+			this.$http.get(appConfig.URL + 'inputs/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {
-					appConfig.employees.items = result.data.sort(this.sort);
+					appConfig.inputs.items = result.data.sort(this.sort);
 					this.items = result.data.sort(this.sort).slice(0, 20);
 					this.filteredItems = result.data.sort(this.sort);
 					this.status = 'show';
 					appConfig.$emit('itemsCount', result.data.length);
 					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)}, 100);
 				}).catch((error)=> {
+				console.log(error)
 					appConfig.notifications.items.push(this.notification);
 					this.status = 'show';
 				})
@@ -99,16 +103,16 @@ export default {
 			}
 		},			
 		showDetails(item){
-			appConfig.employee = item;
-			this.$router.push('employee-edit');
+			appConfig.input = item;
+			this.$router.push('input-edit');
 		},
 		sort(a, b) {
-			let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
+			let nameA = a.id.toLowerCase(), nameB = b.id.toLowerCase();
 			if (nameA < nameB) {
-				return -1
+				return 1
 			}
 			if (nameA > nameB) {
-				return 1
+				return -1
 			}
 			return 0;
 		}				

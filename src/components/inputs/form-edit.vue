@@ -77,7 +77,7 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'employees-edit',
+	name: 'inputs-edit',
 	data() {
 		return {
 			name: '',
@@ -89,8 +89,8 @@ export default {
 		}
 	},
 	created() {
-		if (!appConfig.employee) {
-			this.$router.push('/employees');
+		if (!appConfig.input) {
+			this.$router.push('/inputs');
 		} else {
 			this.setData();
 			this.notification = {
@@ -111,20 +111,20 @@ export default {
 	methods: {
 		setData() {
 			if (appConfig) {
-				if (appConfig.employee) {
-					this.id = appConfig.employee.id;
-					this.name = appConfig.employee.name;
-					this.address = appConfig.employee.address;
-					this.phone = appConfig.employee.phone;
-					this.department = appConfig.employee.department;
-					this.departmentID = appConfig.employee.departmentID;
-					this.sum = ((+appConfig.employee.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-					this.description = appConfig.employee.description;
+				if (appConfig.input) {
+					this.id = appConfig.input.id;
+					this.name = appConfig.input.name;
+					this.address = appConfig.input.address;
+					this.phone = appConfig.input.phone;
+					this.department = appConfig.input.department;
+					this.departmentID = appConfig.input.departmentID;
+					this.sum = ((+appConfig.input.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.description = appConfig.input.description;
 				}
 			}
 		},
 		goBack() {
-			this.$router.push('/employees');
+			this.$router.push('/inputs');
 		},
 		deleteConfirm() {
 			appConfig.$emit('showModal', {
@@ -135,7 +135,7 @@ export default {
 		},
 		deleteItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'employees/delete', {
+			this.$http.post(appConfig.URL + 'inputs/delete', {
 				id: this.id,
 				authorization: appConfig.access_token
 			})
@@ -145,16 +145,16 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification1);
 				}
-				this.$router.push('/employees');
+				this.$router.push('/inputs');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/employees');
+				this.$router.push('/inputs');
 			})
 		},
 		updateItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'employees/update', {                
+			this.$http.post(appConfig.URL + 'inputs/update', {                
 				id: this.id,
 				name: this.name,
 				phone: this.phone,
@@ -171,11 +171,11 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification2);
 				}
-				this.$router.push('/employees');
+				this.$router.push('/inputs');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/employees');
+				this.$router.push('/inputs');
 			})
 		},
 	}
