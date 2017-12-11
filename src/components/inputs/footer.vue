@@ -39,7 +39,7 @@
 import appConfig from '../../main';
 
 export default {
-	name: 'employees-footer',
+	name: 'inputs-footer',
 	data() {
 	  return {
 		count: 0
@@ -52,7 +52,7 @@ export default {
 	},
 	methods: {		
 		addItem(){
-			this.$router.push('employee-add');
+			this.$router.push('input-add');
 		}	
 	}
 }

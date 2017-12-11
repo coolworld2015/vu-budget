@@ -7,12 +7,37 @@
 
   <div v-else>
 	<div style="margin: auto; width: 25%; font-size: 22px; font-weight: bold; margin-bottom: 10px;">
-		<div style="text-align: center; padding-right: 40px;">New employee</div>
+		<div style="text-align: center; padding-right: 40px;">New input</div>
 	</div>
     <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
       <fieldset class="sender-data form-section-wrapper">
         <div class="form-section" style="width: 100%;">
-          
+          		  
+		  <div class="form-group">
+            <label for="senderSurname">InvoiceID</label>
+            <input type="text" class="form-control" id="senderSurname" placeholder="InvoiceID" v-model="invoiceID">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть прізвище відправника.
+            </div>
+          </div>       
+   		  
+		  <div class="form-group">
+            <label for="senderSurname">Date</label>
+            <input type="text" class="form-control" id="senderSurname" placeholder="Date" v-model="date">
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть прізвище відправника.
+            </div>
+          </div>
+		  
+		  <div class="form-group">
+            <label for="typeId">Project</label>
+			<select class="form-control" v-model="projectID" v-on:change="changeDepartment">
+			  <option v-for="option in projects" v-bind:value="option.id" v-bind:data-name="option.name">
+				{{ option.name }}
+			  </option>
+			</select>
+          </div>            
+		  
 		  <div class="form-group">
             <label for="typeId">Department</label>
 			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment">
@@ -20,27 +45,29 @@
 				{{ option.name }}
 			  </option>
 			</select>
-          </div>        
+          </div>  		  
 		  
 		  <div class="form-group">
-            <label for="senderSurname">Name</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="Name" v-model="name">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть прізвище відправника.
-            </div>
-          </div>
+            <label for="typeId">Employee</label>
+			<select class="form-control" v-model="employeeID" v-on:change="changeDepartment">
+			  <option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
+				{{ option.name }}
+			  </option>
+			</select>
+          </div>        
+
 		  
           <div class="form-group">
-            <label for="senderName">Address</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Address" v-model="address">
+            <label for="senderName">Price</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Price" v-model="price">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
           </div>
 		  
           <div class="form-group">
-            <label for="senderName">Phone</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Phone" v-model="phone">
+            <label for="senderName">Quantity</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity">
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
@@ -48,12 +75,20 @@
 
           <div class="form-group">
             <label for="senderPatronymic">Description</label>
-            <input type="text" class="form-control" id="senderPatronymic1" placeholder="Description" v-model="description">
+            <textarea type="text" class="form-control" id="senderPatronymic1" placeholder="Description" v-model="description"></textarea>
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть по-батькові відправника.
             </div>
           </div>
- 
+ 		  
+          <div class="form-group">
+            <label for="senderName">Total</label>
+            <input type="text" class="form-control" id="senderName" placeholder="Total" v-model="total" readonly>
+            <div class="invalid-feedback">
+              Будь ласка, коректно вкажіть ім'я відправника.
+            </div>
+          </div>
+		  
 		  <div class="d-flex justify-content-center" style="margin-top: 30px;">
 			<button class="btn btn-danger" v-on:click="addItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
 			<button class="btn btn-danger" v-on:click="goBack" style="margin: 10px; width: 100px; font-size: 14px;">Back</button>
@@ -71,20 +106,26 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'employees-add',
+	name: 'inputs-add',
 	data() {
 		return {
-			name: '',
-			address: '',
-			phone: '',
-			description: '',
-			loading: true,
+			invoiceID: '',
+			date: '',
+			price: '',
+			quantity: '',
+			projects: [{id:0, name:'Select project'}],			
+			projectID: 0,
 			departments: [{id:0, name:'Select department'}],
-			departmentName: '',
-			departmentID: 0,
+			departmentID: 0,			
+			employees: [{id:0, name:'Select employee'}],
+			employeeID: 0,
+			description: '',
+			total: '0.00',
+			loading: true
 		}
 	},
 	created() {
+		this.getProjects();
 		this.getDepartments();
 		this.notification = {
 			title: 'Something went wrong',
@@ -98,8 +139,19 @@ export default {
 	},
 	methods: {
 		goBack() {
-			this.$router.push('/employees');
+			this.$router.push('/inputs');
 		},
+		getProjects() {
+			this.$http.get(appConfig.URL + 'projects/get', {headers: {'Authorization': appConfig.access_token}})
+				.then(result => {			 
+					this.projects = result.data.sort(this.sort);
+					this.projects.unshift({id:0, name:'Select project'});
+					this.loading = false;
+				}).catch((error)=> {
+					appConfig.notifications.items.push(this.notification);
+					this.loading = false;
+				})
+		},		
 		getDepartments() {
 			this.$http.get(appConfig.URL + 'departments/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {			 
@@ -113,15 +165,27 @@ export default {
 		},
 		addItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'employees/add', {                
+			this.$http.post(appConfig.URL + 'inputs/add', {                
 					id: + new Date,
-					name: this.name,
-					address: this.address,
-					phone: this.phone,
-					department: this.departmentName,
-					departmentID: this.departmentID,
-					sum: '0.00',
+					invoiceID: this.invoiceID,
+					date: this.date,
+					price: this.price,				
+					quantity: this.quantity,	
+					total: this.total,	
 					description: this.description,
+					
+					project: this.projectName,
+					projectID: this.projectID,						
+					
+					department: this.departmentName,
+					departmentID: this.departmentID,					
+					
+					employee: this.employeeName,
+					employeeID: this.employeeID,
+					
+					product: this.productName,
+					productID: this.productID,
+					
 					authorization: appConfig.access_token
 				})
 				.then(result => {
@@ -130,11 +194,11 @@ export default {
 					} else {
 						appConfig.notifications.items.push(this.notification1);
 					}
-					this.$router.push('/employees');
+					this.$router.push('/inputs');
 				})
 				.catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
-					this.$router.push('/employees');
+					this.$router.push('/inputs');
 				})
 		},
 	    changeDepartment (e) {
