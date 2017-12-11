@@ -54,6 +54,15 @@
 				{{ option.name }}
 			  </option>
 			</select>
+          </div>  		
+		  
+		  <div class="form-group">
+            <label for="typeId">Resource</label>
+			<select class="form-control" v-model="resourceID" v-on:change="changeDepartment">
+			  <option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name">
+				{{ option.name }}
+			  </option>
+			</select>
           </div>        
 
 		  
@@ -118,7 +127,9 @@ export default {
 			departments: [{id:0, name:'Select department'}],
 			departmentID: 0,			
 			employees: [{id:0, name:'Select employee'}],
-			employeeID: 0,
+			employeeID: 0,			
+			resources: [{id:0, name:'Select resource'}],
+			resourceID: 0,
 			description: '',
 			total: '0.00',
 			loading: true
