@@ -169,13 +169,27 @@ export default {
 			appConfig.$emit('showModal', {
 			  elName: 'modal-confirmation',
 			  confirm: this.deleteItem,
-			  html: `Are you sure want to delete resource <span class="confirm-amount">${ this.name }?</span>`
+			  html: `Are you sure want to delete resource <span class="confirm-amount">${ this.invoiceID }?</span>`
 			})
 		},
 		deleteItem() {
 			this.loading = true;
 			this.$http.post(appConfig.URL + 'inputs/delete', {
-				id: this.id,
+				id: appConfig.input.id,
+				date: appConfig.input.date,
+				project: appConfig.input.project,
+				projectID: appConfig.input.projectID,
+				employee: appConfig.input.employee,
+				employeeID: appConfig.input.employeeID,
+				department: appConfig.input.department,
+				departmentID: appConfig.input.departmentID,
+				product: appConfig.input.product,
+				productID: appConfig.input.productID,
+				invoiceID: appConfig.input.invoiceID,
+				price: appConfig.input.price,
+				quantity: appConfig.input.quantity,
+				total: appConfig.input.total,
+				description: appConfig.input.description,
 				authorization: appConfig.access_token
 			})
 			.then(result => {
@@ -198,9 +212,9 @@ export default {
 				name: this.name,
 				phone: this.phone,
 				address: this.address,
-				department: appConfig.employee.department,
-				departmentID: appConfig.employee.departmentID,
-				sum: appConfig.employee.sum,
+				department: appConfig.input.department,
+				departmentID: appConfig.input.departmentID,
+				sum: appConfig.input.sum,
 				description: this.description,
 				authorization: appConfig.access_token
 			})
