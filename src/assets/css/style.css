@@ -435,8 +435,9 @@ main {
 }
 
 .message-svg--incomeCall {
-	fill: #009688;
-	transform: rotate(-45deg);
+	//fill: #009688;
+	fill: #2196f3;
+	//transform: rotate(-180deg);
 }
 
 .message-svg--private {
