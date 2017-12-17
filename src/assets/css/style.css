@@ -411,6 +411,7 @@ main {
 .message-svg {
 	width: 14px;
 	height: 14px;
+	transform: rotate(-90deg);
 }
 
 .message-svg--question {
@@ -437,7 +438,7 @@ main {
 .message-svg--incomeCall {
 	//fill: #009688;
 	fill: #2196f3;
-	//transform: rotate(-180deg);
+	transform: rotate(-90deg);
 }
 
 .message-svg--private {
