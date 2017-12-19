@@ -31,7 +31,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Project</label>
-			<select class="form-control" v-model="projectID" v-on:change="changeDepartment">
+			<select class="form-control" v-model="projectID" v-on:change="changeProject">
 			  <option v-for="option in projects" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
@@ -49,7 +49,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Employee</label>
-			<select class="form-control" v-model="employeeID" v-on:change="changeDepartment">
+			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee">
 			  <option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
@@ -58,7 +58,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Resource</label>
-			<select class="form-control" v-model="resourceID" v-on:change="changeDepartment">
+			<select class="form-control" v-model="resourceID" v-on:change="changeResource">
 			  <option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
@@ -138,6 +138,8 @@ export default {
 	created() {
 		this.getProjects();
 		this.getDepartments();
+		this.getEmployees();
+		this.getResources();
 		this.notification = {
 			title: 'Something went wrong',
 			message: 'Server responded with status code error',
@@ -173,6 +175,28 @@ export default {
 					appConfig.notifications.items.push(this.notification);
 					this.loading = false;
 				})
+		},		
+		getEmployees() {
+			this.$http.get(appConfig.URL + 'employees/get', {headers: {'Authorization': appConfig.access_token}})
+				.then(result => {			 
+					this.employees = result.data.sort(this.sort);
+					this.employees.unshift({id:0, name:'Select employee'});
+					this.loading = false;
+				}).catch((error)=> {
+					appConfig.notifications.items.push(this.notification);
+					this.loading = false;
+				})
+		},		
+		getResources() {
+			this.$http.get(appConfig.URL + 'goods/get', {headers: {'Authorization': appConfig.access_token}})
+				.then(result => {			 
+					this.resources = result.data.sort(this.sort);
+					this.resources.unshift({id:0, name:'Select resource'});
+					this.loading = false;
+				}).catch((error)=> {
+					appConfig.notifications.items.push(this.notification);
+					this.loading = false;
+				})
 		},
 		addItem() {
 			this.loading = true;
@@ -182,8 +206,8 @@ export default {
 					date: this.date,
 					price: this.price,				
 					quantity: this.quantity,	
-					total: this.total,	
 					description: this.description,
+					total: this.total,	
 					
 					project: this.projectName,
 					projectID: this.projectID,						
@@ -194,8 +218,8 @@ export default {
 					employee: this.employeeName,
 					employeeID: this.employeeID,
 					
-					product: this.productName,
-					productID: this.productID,
+					product: this.resourceName,
+					productID: this.resourceID,
 					
 					authorization: appConfig.access_token
 				})
@@ -212,11 +236,26 @@ export default {
 					this.$router.push('/inputs');
 				})
 		},
-	    changeDepartment (e) {
+	    changeProject (e) {
+			if(e.target.options.selectedIndex > -1) {
+				this.projectName = e.target.options[e.target.options.selectedIndex].dataset.name
+			}
+		  },	    
+		  changeDepartment (e) {
 			if(e.target.options.selectedIndex > -1) {
 				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
-		  },	
+		  },		  
+		  changeEmployee (e) {
+			if(e.target.options.selectedIndex > -1) {
+				this.employeeName = e.target.options[e.target.options.selectedIndex].dataset.name
+			}
+		  },		  
+		  changeResource (e) {
+			if(e.target.options.selectedIndex > -1) {
+				this.resourceName = e.target.options[e.target.options.selectedIndex].dataset.name
+			}
+		  }
 	}
 }
 </script>

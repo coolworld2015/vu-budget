@@ -7,7 +7,7 @@
 
   <div v-else>
 	<div style="margin: auto; width: 25%; font-size: 22px; font-weight: bold; margin-bottom: 10px;">
-		<div style="text-align: center; padding-right: 40px;">{{ invoiceID }}</div>
+		<div style="text-align: center; padding-right: 40px;">InvoiceID: {{ invoiceID }}</div>
 	</div>
     <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
       <fieldset class="sender-data form-section-wrapper">
