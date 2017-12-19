@@ -90,15 +90,17 @@
             </div>
           </div>
  		  
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom: 30px;">
             <label for="senderName">Total</label>
             <input type="text" class="form-control" id="senderName" placeholder="Total" v-model="total" readonly>
             <div class="invalid-feedback">
               Будь ласка, коректно вкажіть ім'я відправника.
             </div>
           </div>
-		  
-		  <div class="d-flex justify-content-center" style="margin-top: 30px;">
+		  <div style="font-weight: bold; font-size: 14px; color: #dc3545; margin-top: 15px">
+		    <span v-show="invalidValue" style="margin-left: 100px;">Value required - please provide.</span>
+		  </div>
+		  <div class="d-flex justify-content-center" style1="margin-top: 30px;">
 			<button class="btn btn-danger" v-on:click="addItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
 			<button class="btn btn-danger" v-on:click="goBack" style="margin: 10px; width: 100px; font-size: 14px;">Back</button>
 		  </div>
@@ -118,9 +120,9 @@ export default {
 	name: 'inputs-add',
 	data() {
 		return {
-			invoiceID: '',
+			invoiceID: (appConfig.inputs.items.length + 1).toString(),
 			date: '',
-			price: '',
+			price: '0.00',
 			quantity: '',
 			projects: [{id:0, name:'Select project'}],			
 			projectID: 0,
@@ -132,7 +134,8 @@ export default {
 			resourceID: 0,
 			description: '',
 			total: '0.00',
-			loading: true
+			loading: true,
+			invalidValue: false
 		}
 	},
 	created() {
@@ -149,6 +152,10 @@ export default {
 			title: 'Item created',
 			message: `Item was created successfully`
 		}
+		let d = new Date;
+        let todayDate = d.getMonth() + 1 + '/' + (d.getDate()) + '/' + d.getFullYear();
+		let time = d.toTimeString().split(' ');
+		this.date = todayDate + ' ' + time[0];
 	},
 	methods: {
 		goBack() {

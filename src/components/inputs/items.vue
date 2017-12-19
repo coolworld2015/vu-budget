@@ -11,9 +11,9 @@
       <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
 
       <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
-      <div class="search-results-item search-results-sender" style="width: 20%;">{{ item.project }}</div>
+      <div class="search-results-item search-results-sender" style="width: 20%; right: 15px;">{{ item.project }}</div>
       <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
-      <div class="search-results-item search-results-sender" style="width: 20%;">{{ item.description }}</div>
+      <div class="search-results-item search-results-sender" style="width: 20%; right: 10px;">{{ item.description }}</div>
       <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
 
     </div>
