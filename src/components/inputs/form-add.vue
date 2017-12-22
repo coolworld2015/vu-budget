@@ -15,18 +15,26 @@
           		  
 		  <div class="form-group">
             <label for="senderSurname">InvoiceID</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="InvoiceID" v-model="invoiceID">
+            <input type="text" class="form-control" id="senderSurname" placeholder="InvoiceID" 
+				v-model="invoiceID"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.invoiceID }">
           </div>       
    		  
 		  <div class="form-group">
             <label for="senderSurname">Date</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="Date" v-model="date">
+            <input type="text" class="form-control" id="senderSurname" placeholder="Date" 
+				v-model="date"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.date }">
           </div>
 		  
 		  <div class="form-group">
             <label for="typeId">Project</label>
-			<select class="form-control" v-model="projectID" v-on:change="changeProject">
-			  <option v-for="option in projects" v-bind:value="option.id" v-bind:data-name="option.name">
+			<select class="form-control" v-model="projectID" v-on:change="changeProject; clearWarning()"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.project }">
+				<option v-for="option in projects" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
 			</select>
@@ -34,8 +42,10 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Department</label>
-			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment">
-			  <option v-for="option in departments" v-bind:value="option.id" v-bind:data-name="option.name">
+			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment; clearWarning()"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.department }">
+				<option v-for="option in departments" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
 			</select>
@@ -43,8 +53,10 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Employee</label>
-			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee">
-			  <option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
+			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee; clearWarning()"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.employee }">
+				<option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
 			</select>
@@ -52,8 +64,10 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Resource</label>
-			<select class="form-control" v-model="resourceID" v-on:change="changeResource">
-			  <option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name">
+			<select class="form-control" v-model="resourceID" v-on:change="changeResource; clearWarning()"
+ 
+				v-bind:class="{ warning: fieldsErrors.resource }">
+				<option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
 			</select>
@@ -62,19 +76,25 @@
 		  
           <div class="form-group">
             <label for="senderName">Price</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Price" v-model="price">
+            <input type="text" class="form-control" id="senderName" placeholder="Price" 
+				v-model="price"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.price }">
           </div>
 		  
           <div class="form-group">
             <label for="senderName">Quantity</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity">
+            <input type="text" class="form-control" id="senderName" placeholder="Quantity" 
+				v-model="quantity"
+				v-on:keypress="clearWarning"
+				v-bind:class="{ warning: fieldsErrors.quantity }">
           </div>
 
           <div class="form-group">
             <label for="senderPatronymic">Description</label>
             <textarea type="text" class="form-control" id="senderPatronymic1" placeholder="Description" 
 				v-model="description" 
-				v-on:keypress="clearWarning()"
+				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.description }"></textarea>
           </div>
  		  
@@ -108,7 +128,7 @@ export default {
 		return {
 			invoiceID: (appConfig.inputs.items.length + 1).toString(),
 			date: '',
-			price: '0.00',
+			price: '',
 			quantity: '',
 			projects: [{id:0, name:'Select project'}],			
 			projectID: 0,
@@ -123,7 +143,15 @@ export default {
 			loading: true,
 			invalidValue: false,
 			fieldsErrors: {
-				description: false,
+				invoiceID: false,
+				date: false,
+				price: false,
+				quantity: false,
+				project: false,
+				department: false,
+				employee: false,
+				resource: false,
+				description: false
 			},
 		}
 	},
@@ -195,11 +223,55 @@ export default {
 				})
 		},
 		addItem() {
+			if (this.invoiceID == '') {
+				this.fieldsErrors.invoiceID = true;
+				this.invalidValue = true;
+			}			
+			
+			if (this.date == '') {
+				this.fieldsErrors.date = true;
+				this.invalidValue = true;
+			}		
+			
+			if (this.price == '') {
+				this.fieldsErrors.price = true;
+				this.invalidValue = true;
+			}				
+			
+			if (this.quantity == '') {
+				this.fieldsErrors.quantity = true;
+				this.invalidValue = true;
+			}				
+			
+			if (this.projectID == 0) {
+				this.fieldsErrors.project = true;
+				this.invalidValue = true;
+			}				
+			
+			if (this.departmentID == 0) {
+				this.fieldsErrors.department = true;
+				this.invalidValue = true;
+			}				
+			
+			if (this.employeeID == 0) {
+				this.fieldsErrors.employee = true;
+				this.invalidValue = true;
+			}				
+			
+			if (this.resourceID == 0) {
+				this.fieldsErrors.resource = true;
+				this.invalidValue = true;
+			}				
+			
 			if (this.description == '') {
 				this.fieldsErrors.description = true;
 				this.invalidValue = true;
+			}			
+			
+			if (this.invalidValue) {
 				return;
 			}
+			
 			this.loading = true;
 			this.$http.post(appConfig.URL + 'inputs/add', {                
 					id: + new Date,
@@ -238,6 +310,14 @@ export default {
 				})
 		},
 		clearWarning() {
+			this.fieldsErrors.invoiceID = false;
+			this.fieldsErrors.date = false;
+			this.fieldsErrors.price = false;
+			this.fieldsErrors.quantity = false;
+			this.fieldsErrors.project = false;
+			this.fieldsErrors.department = false;
+			this.fieldsErrors.employee = false;
+			this.fieldsErrors.resource = false;
 			this.fieldsErrors.description = false;
 			this.invalidValue = false;
 		},
