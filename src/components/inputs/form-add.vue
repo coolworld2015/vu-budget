@@ -31,7 +31,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Project</label>
-			<select class="form-control" v-model="projectID" v-on:change="changeProject; clearWarning()"
+			<select class="form-control" v-model="projectID" v-on:change="changeProject"
 				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.project }">
 				<option v-for="option in projects" v-bind:value="option.id" v-bind:data-name="option.name">
@@ -42,7 +42,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Department</label>
-			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment; clearWarning()"
+			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment"
 				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.department }">
 				<option v-for="option in departments" v-bind:value="option.id" v-bind:data-name="option.name">
@@ -53,7 +53,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Employee</label>
-			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee; clearWarning()"
+			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee"
 				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.employee }">
 				<option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
@@ -64,7 +64,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Resource</label>
-			<select class="form-control" v-model="resourceID" v-on:change="changeResource; clearWarning()"
+			<select class="form-control" v-model="resourceID" v-on:change="changeResource"
  
 				v-bind:class="{ warning: fieldsErrors.resource }">
 				<option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name">
@@ -322,21 +322,25 @@ export default {
 			this.invalidValue = false;
 		},
 	    changeProject (e) {
+			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.projectName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
 		  },	    
 		  changeDepartment (e) {
+			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
 		  },		  
 		  changeEmployee (e) {
+			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.employeeName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
 		  },		  
 		  changeResource (e) {
+			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.resourceName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
