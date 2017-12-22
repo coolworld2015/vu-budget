@@ -16,17 +16,11 @@
 		  <div class="form-group">
             <label for="senderSurname">InvoiceID</label>
             <input type="text" class="form-control" id="senderSurname" placeholder="InvoiceID" v-model="invoiceID">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть прізвище відправника.
-            </div>
           </div>       
    		  
 		  <div class="form-group">
             <label for="senderSurname">Date</label>
             <input type="text" class="form-control" id="senderSurname" placeholder="Date" v-model="date">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть прізвище відправника.
-            </div>
           </div>
 		  
 		  <div class="form-group">
@@ -69,36 +63,28 @@
           <div class="form-group">
             <label for="senderName">Price</label>
             <input type="text" class="form-control" id="senderName" placeholder="Price" v-model="price">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть ім'я відправника.
-            </div>
           </div>
 		  
           <div class="form-group">
             <label for="senderName">Quantity</label>
             <input type="text" class="form-control" id="senderName" placeholder="Quantity" v-model="quantity">
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть ім'я відправника.
-            </div>
           </div>
 
           <div class="form-group">
             <label for="senderPatronymic">Description</label>
-            <textarea type="text" class="form-control" id="senderPatronymic1" placeholder="Description" v-model="description"></textarea>
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть по-батькові відправника.
-            </div>
+            <textarea type="text" class="form-control" id="senderPatronymic1" placeholder="Description" 
+				v-model="description" 
+				v-on:keypress="clearWarning()"
+				v-bind:class="{ warning: fieldsErrors.description }"></textarea>
           </div>
  		  
           <div class="form-group" style="margin-bottom: 30px;">
             <label for="senderName">Total</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Total" v-model="total" readonly>
-            <div class="invalid-feedback">
-              Будь ласка, коректно вкажіть ім'я відправника.
-            </div>
+            <input type="text" class="form-control" id="senderName" placeholder="Total" 
+				v-model="total"  readonly>
           </div>
-		  <div style="font-weight: bold; font-size: 14px; color: #dc3545; margin-top: 15px">
-		    <span v-show="invalidValue" style="margin-left: 100px;">Value required - please provide.</span>
+		  <div style="font-weight: bold; font-size: 14px; color: #dc3545; margin-top: 15px; text-align: center;">
+		    <span v-show="invalidValue" style="margin-left: 0px;">Value required - please provide.</span>
 		  </div>
 		  <div class="d-flex justify-content-center" style1="margin-top: 30px;">
 			<button class="btn btn-danger" v-on:click="addItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
@@ -135,7 +121,10 @@ export default {
 			description: '',
 			total: '0.00',
 			loading: true,
-			invalidValue: false
+			invalidValue: false,
+			fieldsErrors: {
+				description: false,
+			},
 		}
 	},
 	created() {
@@ -206,6 +195,11 @@ export default {
 				})
 		},
 		addItem() {
+			if (this.description == '') {
+				this.fieldsErrors.description = true;
+				this.invalidValue = true;
+				return;
+			}
 			this.loading = true;
 			this.$http.post(appConfig.URL + 'inputs/add', {                
 					id: + new Date,
@@ -242,6 +236,10 @@ export default {
 					appConfig.notifications.items.push(this.notification);
 					this.$router.push('/inputs');
 				})
+		},
+		clearWarning() {
+			this.fieldsErrors.description = false;
+			this.invalidValue = false;
 		},
 	    changeProject (e) {
 			if(e.target.options.selectedIndex > -1) {
