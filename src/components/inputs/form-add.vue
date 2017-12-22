@@ -65,15 +65,13 @@
 		  <div class="form-group">
             <label for="typeId">Resource</label>
 			<select class="form-control" v-model="resourceID" v-on:change="changeResource"
- 
 				v-bind:class="{ warning: fieldsErrors.resource }">
-				<option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name">
+				<option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name" v-bind:data-price="option.price">
 				{{ option.name }}
 			  </option>
 			</select>
           </div>        
 
-		  
           <div class="form-group">
             <label for="senderName">Price</label>
             <input type="text" class="form-control" id="senderName" placeholder="Price" 
@@ -343,6 +341,7 @@ export default {
 			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.resourceName = e.target.options[e.target.options.selectedIndex].dataset.name
+				this.price = ((+e.target.options[e.target.options.selectedIndex].dataset.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 			}
 		  }
 	}
