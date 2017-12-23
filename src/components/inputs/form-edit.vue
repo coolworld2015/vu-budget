@@ -155,8 +155,8 @@ export default {
 					this.departmentID = appConfig.input.departmentID;
 					this.product = appConfig.input.product;
 					this.productID = appConfig.input.productID;
-					this.price = appConfig.input.price;
-					this.quantity = appConfig.input.quantity;
+					this.price = ((+appConfig.input.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.quantity = ((+appConfig.input.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 					this.sum = ((+appConfig.input.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 					this.description = appConfig.input.description;
 				}

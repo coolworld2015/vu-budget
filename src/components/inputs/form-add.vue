@@ -101,7 +101,8 @@
           <div class="form-group" style="margin-bottom: 30px;">
             <label for="senderName">Total</label>
             <input type="text" class="form-control" id="senderName" placeholder="Total" 
-				v-model="total"  readonly>
+				v-model="total"  readonly
+				v-bind:class="{ warning: fieldsErrors.total }">
           </div>
 		  <div style="font-weight: bold; font-size: 14px; color: #dc3545; margin-top: 15px; text-align: center;">
 		    <span v-show="invalidValue" style="margin-left: 0px;">Value required - please provide.</span>
@@ -140,6 +141,7 @@ export default {
 			resourceID: 0,
 			description: '',
 			total: '0.00',
+			sum: 0,
 			loading: true,
 			invalidValue: false,
 			fieldsErrors: {
@@ -151,7 +153,8 @@ export default {
 				department: false,
 				employee: false,
 				resource: false,
-				description: false
+				description: false,
+				total: false
 			},
 		}
 	},
@@ -222,6 +225,16 @@ export default {
 					this.loading = false;
 				})
 		},
+		sort(a, b) {
+			let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
+			if (nameA < nameB) {
+				return -1
+			}
+			if (nameA > nameB) {
+				return 1
+			}
+			return 0;
+		},
 		addItem() {
 			if (this.invoiceID == '') {
 				this.fieldsErrors.invoiceID = true;
@@ -268,6 +281,21 @@ export default {
 				this.invalidValue = true;
 			}			
 			
+			if (this.isNumber(this.price) != true) {
+				this.fieldsErrors.price = true;
+				this.invalidValue = true;
+			}			
+			
+			if (this.isNumber(this.quantity) != true) {
+				this.fieldsErrors.quantity = true;
+				this.invalidValue = true;
+			}			
+			
+			if (this.isNumber(this.sum) != true) {
+				this.fieldsErrors.total = true;
+				this.invalidValue = true;
+			}
+			
 			if (this.invalidValue) {
 				return;
 			}
@@ -280,7 +308,7 @@ export default {
 					price: this.price,				
 					quantity: this.quantity,	
 					description: this.description,
-					total: this.total,	
+					total: this.sum,	
 					
 					project: this.projectName,
 					projectID: this.projectID,						
@@ -319,6 +347,7 @@ export default {
 			this.fieldsErrors.employee = false;
 			this.fieldsErrors.resource = false;
 			this.fieldsErrors.description = false;
+			this.fieldsErrors.total = false;
 			this.invalidValue = false;
 		},
 	    changeProject (e) {
@@ -347,10 +376,12 @@ export default {
 			}
 		  },		  
 		  changeTotal (e) {
-			let total = (+this.price)*(+this.quantity)
-			this.total = ((+total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
- 
-		  }
+			this.sum = (+this.price)*(+this.quantity)
+			this.total = ((+this.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+		  },
+		isNumber(n) {
+			return !isNaN(parseFloat(n)) && isFinite(n);
+		}
 	}
 }
 </script>
