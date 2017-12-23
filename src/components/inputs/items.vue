@@ -53,13 +53,17 @@ export default {
 		appConfig.$on('searchQuery', searchQuery => {
 			this.searchQuery = searchQuery;
 			var arr = [].concat(appConfig.inputs.items);
-			var items = arr.filter((el) => el.name.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1);
+			var items = arr.filter((el) => el.invoiceID.indexOf(searchQuery.toLowerCase()) != -1);
 			this.filteredItems = items;
 			this.items = items.slice(0, 20);
 			this.positionY = 0;
 			this.recordsCount = 20;
 			
 			appConfig.$emit('itemsCount', items.length);
+			let total = 0;
+			this.items.forEach((el) => total += +el.total);
+			appConfig.$emit('total', total);
+					
 			if (searchQuery == '') {
 				this.items = appConfig.inputs.items.slice(0, 20);
 				this.filteredItems = appConfig.inputs.items;
@@ -75,6 +79,9 @@ export default {
 					this.filteredItems = result.data.sort(this.sort);
 					this.status = 'show';
 					appConfig.$emit('itemsCount', result.data.length);
+					let total = 0;
+					this.items.forEach((el) => total += +el.total);
+					appConfig.$emit('total', total);
 					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
@@ -107,7 +114,7 @@ export default {
 			this.$router.push('input-edit');
 		},
 		sort(a, b) {
-			let nameA = a.id.toLowerCase(), nameB = b.id.toLowerCase();
+			let nameA = a.invoiceID, nameB = b.invoiceID;
 			if (nameA < nameB) {
 				return 1
 			}

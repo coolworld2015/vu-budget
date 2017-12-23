@@ -3,13 +3,20 @@
 		<div class="activated-payments-item">
 			<span class="selected-payments" id="activatedPaymentsBox" style="width: 44px;">{{ count }}</span>
 			Records
-		</div>
+		</div>		
+		
+		<div class="activated-payments-item">
+			<span class="selected-payments" id="activatedPaymentsBox" style="width: 100px; margin-left1: 400px;">{{ total }}</span>
+			Total
+		</div>	
+		
 		<div class="activated-payments-item" v-on:click="addItem">
 			<button class="" id="cancelSelection">
 				<svg class="activated-payments-svg"><use xlink:href="#plus"></use></svg>
 				New item
 			</button>
 		</div>
+	
 <!--
 		<div class="activated-payments-item">
 			<button id="showTrusted">
@@ -42,12 +49,16 @@ export default {
 	name: 'inputs-footer',
 	data() {
 	  return {
-		count: 0
+		count: 0,
+		total: 0
 	  }
 	},
 	created() {
 		appConfig.$on('itemsCount', itemsCount => {
 			this.count = itemsCount;
+		})			
+		appConfig.$on('total', total => {
+			this.total = ((+total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 		})			
 	},
 	methods: {		
