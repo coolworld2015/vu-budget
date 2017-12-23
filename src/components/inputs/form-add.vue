@@ -77,6 +77,7 @@
             <input type="text" class="form-control" id="senderName" placeholder="Price" 
 				v-model="price"
 				v-on:keypress="clearWarning"
+				v-on:keyup="changeTotal"
 				v-bind:class="{ warning: fieldsErrors.price }">
           </div>
 		  
@@ -85,6 +86,7 @@
             <input type="text" class="form-control" id="senderName" placeholder="Quantity" 
 				v-model="quantity"
 				v-on:keypress="clearWarning"
+				v-on:keyup="changeTotal"
 				v-bind:class="{ warning: fieldsErrors.quantity }">
           </div>
 
@@ -343,6 +345,11 @@ export default {
 				this.resourceName = e.target.options[e.target.options.selectedIndex].dataset.name
 				this.price = ((+e.target.options[e.target.options.selectedIndex].dataset.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 			}
+		  },		  
+		  changeTotal (e) {
+			let total = (+this.price)*(+this.quantity)
+			this.total = ((+total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+ 
 		  }
 	}
 }
