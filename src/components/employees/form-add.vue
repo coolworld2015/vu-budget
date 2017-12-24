@@ -142,6 +142,16 @@ export default {
 				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
 		  },	
+		  sort(a, b) {
+			let nameA = a.name, nameB = b.name;
+			if (nameA < nameB) {
+				return -1
+			}
+			if (nameA > nameB) {
+				return 1
+			}
+			return 0;
+		}	
 	}
 }
 </script>

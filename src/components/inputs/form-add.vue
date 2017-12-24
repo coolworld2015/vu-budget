@@ -56,7 +56,7 @@
 			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee"
 				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.employee }">
-				<option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
+				<option v-for="option in filteredEmployees" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
 			</select>
@@ -135,7 +135,8 @@ export default {
 			projectID: 0,
 			departments: [{id:0, name:'Select department'}],
 			departmentID: 0,			
-			employees: [{id:0, name:'Select employee'}],
+			employees: [],
+			filteredEmployees: [{id:0, name:'Select employee'}],
 			employeeID: 0,			
 			resources: [{id:0, name:'Select resource'}],
 			resourceID: 0,
@@ -207,7 +208,7 @@ export default {
 			this.$http.get(appConfig.URL + 'employees/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {			 
 					this.employees = result.data.sort(this.sort);
-					this.employees.unshift({id:0, name:'Select employee'});
+					//this.employees.unshift({id:0, name:'Select employee'});
 					this.loading = false;
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
@@ -360,6 +361,9 @@ export default {
 			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
+				let arrEmployees = [].concat(this.employees);
+				let filteredEmployees = arrEmployees.filter((el) => el.departmentID == e.target.value);
+				this.filteredEmployees = [{id:0, name:'Select employee'}].concat(filteredEmployees);
 			}
 		  },		  
 		  changeEmployee (e) {
