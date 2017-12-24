@@ -109,7 +109,7 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'inputs-edit',
+	name: 'outputs-edit',
 	data() {
 		return {
 			invoiceID: '',
@@ -121,8 +121,8 @@ export default {
 		}
 	},
 	created() {
-		if (!appConfig.input) {
-			this.$router.push('/inputs');
+		if (!appConfig.output) {
+			this.$router.push('/outputs');
 		} else {
 			this.setData();
 			this.notification = {
@@ -143,27 +143,27 @@ export default {
 	methods: {
 		setData() {
 			if (appConfig) {
-				if (appConfig.input) {
-					this.id = appConfig.input.id;
-					this.invoiceID = appConfig.input.invoiceID;
-					this.date = appConfig.input.date;
-					this.project = appConfig.input.project;
-					this.projectID = appConfig.input.projectID;
-					this.employee = appConfig.input.employee;
-					this.employeeID = appConfig.input.employeeID;
-					this.department = appConfig.input.department;
-					this.departmentID = appConfig.input.departmentID;
-					this.product = appConfig.input.product;
-					this.productID = appConfig.input.productID;
-					this.price = ((+appConfig.input.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-					this.quantity = ((+appConfig.input.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-					this.sum = ((+appConfig.input.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-					this.description = appConfig.input.description;
+				if (appConfig.output) {
+					this.id = appConfig.output.id;
+					this.invoiceID = appConfig.output.invoiceID;
+					this.date = appConfig.output.date;
+					this.project = appConfig.output.project;
+					this.projectID = appConfig.output.projectID;
+					this.employee = appConfig.output.employee;
+					this.employeeID = appConfig.output.employeeID;
+					this.department = appConfig.output.department;
+					this.departmentID = appConfig.output.departmentID;
+					this.product = appConfig.output.product;
+					this.productID = appConfig.output.productID;
+					this.price = ((+appConfig.output.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.quantity = ((+appConfig.output.quantity).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.sum = ((+appConfig.output.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+					this.description = appConfig.output.description;
 				}
 			}
 		},
 		goBack() {
-			this.$router.push('/inputs');
+			this.$router.push('/outputs');
 		},
 		deleteConfirm() {
 			appConfig.$emit('showModal', {
@@ -174,22 +174,22 @@ export default {
 		},
 		deleteItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'inputs/delete', {
-				id: appConfig.input.id,
-				date: appConfig.input.date,
-				project: appConfig.input.project,
-				projectID: appConfig.input.projectID,
-				employee: appConfig.input.employee,
-				employeeID: appConfig.input.employeeID,
-				department: appConfig.input.department,
-				departmentID: appConfig.input.departmentID,
-				product: appConfig.input.product,
-				productID: appConfig.input.productID,
-				invoiceID: appConfig.input.invoiceID,
-				price: appConfig.input.price,
-				quantity: appConfig.input.quantity,
-				total: appConfig.input.total,
-				description: appConfig.input.description,
+			this.$http.post(appConfig.URL + 'outputs/delete', {
+				id: appConfig.output.id,
+				date: appConfig.output.date,
+				project: appConfig.output.project,
+				projectID: appConfig.output.projectID,
+				employee: appConfig.output.employee,
+				employeeID: appConfig.output.employeeID,
+				department: appConfig.output.department,
+				departmentID: appConfig.output.departmentID,
+				product: appConfig.output.product,
+				productID: appConfig.output.productID,
+				invoiceID: appConfig.output.invoiceID,
+				price: appConfig.output.price,
+				quantity: appConfig.output.quantity,
+				total: appConfig.output.total,
+				description: appConfig.output.description,
 				authorization: appConfig.access_token
 			})
 			.then(result => {
@@ -198,23 +198,23 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification1);
 				}
-				this.$router.push('/inputs');
+				this.$router.push('/outputs');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/inputs');
+				this.$router.push('/outputs');
 			})
 		},
 		updateItem() {
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'inputs/update', {                
+			this.$http.post(appConfig.URL + 'outputs/update', {                
 				id: this.id,
 				name: this.name,
 				phone: this.phone,
 				address: this.address,
-				department: appConfig.input.department,
-				departmentID: appConfig.input.departmentID,
-				sum: appConfig.input.sum,
+				department: appConfig.output.department,
+				departmentID: appConfig.output.departmentID,
+				sum: appConfig.output.sum,
 				description: this.description,
 				authorization: appConfig.access_token
 			})
@@ -224,11 +224,11 @@ export default {
 				} else {
 				appConfig.notifications.items.push(this.notification2);
 				}
-				this.$router.push('/inputs');
+				this.$router.push('/outputs');
 			})
 			.catch((error)=> {
 				appConfig.notifications.items.push(this.notification);
-				this.$router.push('/inputs');
+				this.$router.push('/outputs');
 			})
 		},
 	}

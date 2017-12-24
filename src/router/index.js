@@ -10,6 +10,10 @@ import Inputs from '@/components/inputs/inputs';
 import InputEdit from '@/components/inputs/edit';
 import InputAdd from '@/components/inputs/add';
 
+import Outputs from '@/components/outputs/outputs';
+import OutputEdit from '@/components/outputs/edit';
+import OutputAdd from '@/components/outputs/add';
+
 import Projects from '@/components/projects/projects';
 import ProjectEdit from '@/components/projects/edit';
 import ProjectAdd from '@/components/projects/add';
@@ -42,7 +46,11 @@ export default new Router({
 	
 	{ path: '/inputs', component: Inputs },
     { path: '/input-edit', component: InputEdit },
-    { path: '/input-add', component: InputAdd },		
+    { path: '/input-add', component: InputAdd },	
+	
+	{ path: '/outputs', component: Outputs },
+    { path: '/output-edit', component: OutputEdit },
+    { path: '/output-add', component: OutputAdd },		
 	
 	{ path: '/projects', component: Projects },
     { path: '/project-edit', component: ProjectEdit },
