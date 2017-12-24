@@ -39,6 +39,7 @@ export default {
   },
 	created() {
 		appConfig.route = this.route;			
+		appConfig.access_token = null;			
 	},
 	methods: {
 		fetchData() {

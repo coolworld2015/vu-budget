@@ -11,134 +11,134 @@
 					</span>
 				</li>  								 
 				<li class="fp-nav-item fp-nav-item-right">
-				  <a class="fp-nav-link menu-block-header" href="#">Budget</a>
+				  <span class="fp-nav-link menu-block-header">Budget</span>
 				</li>				
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('assets')" 
 					v-bind:class="{ active: assets }">
-					<a class="fp-nav-link" href="#">Assets</a>
+					<span class="fp-nav-link">Assets</span>
 				</li>				
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('reports')" 
 					v-bind:class="{ active: reports }">
-					<a class="fp-nav-link" href="#">Reports</a>
+					<span class="fp-nav-link">Reports</span>
 				</li>			
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('inputs')" 
 					v-bind:class="{ active: inputs }">
-					<a class="fp-nav-link" href="#">Inputs</a>
+					<span class="fp-nav-link">Inputs</span>
 				</li>			
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('outputs')" 
 					v-bind:class="{ active: outputs }">
-					<a class="fp-nav-link" href="#">Outputs</a>
+					<span class="fp-nav-link">Outputs</span>
 				</li>				
 			
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('projects')" 
 					v-bind:class="{ active: projects }">
-					<a class="fp-nav-link" href="#">Projects</a>
+					<span class="fp-nav-link">Projects</span>
 				</li>		
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('departments')" 
 					v-bind:class="{ active: departments }">
-					<a class="fp-nav-link" href="#">Departments</a>
+					<span class="fp-nav-link">Departments</span>
 				</li>			
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('employees')" 
 					v-bind:class="{ active: employees }">
-					<a class="fp-nav-link" href="#">Employees</a>
+					<span class="fp-nav-link">Employees</span>
 				</li>
   				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('resources')" 
 					v-bind:class="{ active: resources }">
-					<a class="fp-nav-link" href="#">Resources</a>
+					<span class="fp-nav-link">Resources</span>
 				</li> 	
 				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('audits')" 
 					v-bind:class="{ active: audits }">
-					<a class="fp-nav-link" href="#">Audits</a>
+					<span class="fp-nav-link">Audits</span>
 				</li>
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('users')" 
 					v-bind:class="{ active: users }">
-					<a class="fp-nav-link" href="#">Users</a>
+					<span class="fp-nav-link">Users</span>
 				</li>				
 				<li class="fp-nav-item fp-nav-item-right" v-on:click="changeRoute('')" 
 					v-bind:class="{ active: logout }">
-					<a class="fp-nav-link" href="#">Logout</a>
+					<span class="fp-nav-link">Logout</span>
 				</li>
 			</ul>
 			
 			<ul class="h-100 fp-nav-left">
 				<li class="fp-nav-item fp-nav-item-left li-border-bottom" v-on:click="changeView()">
-					<a class="fp-nav-link" href="#" id="showNav" title="Base 09">BU</a>
+					<span class="fp-nav-link" id="showNav" title="Base 09">BU</span>
 					<span class="hot-key-hint">~</span>
 				</li>
 				<li class="fp-nav-item fp-nav-item-left">
-				  <a class="fp-nav-link" href="#"></a>
+				  <span class="fp-nav-link"></span>
 				  <span class="hot-key-hint">1</span>
 				</li>
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('assets')" 
 					v-bind:class="{ active: assets }">
-					<a class="fp-nav-link" href="#" title="Assets">AS</a>
+					<span class="fp-nav-link" title="Assets">AS</span>
 					<span class="hot-key-hint">2</span>
 				</li>		
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('reports')" 
 					v-bind:class="{ active: reports }">
-					<a class="fp-nav-link" href="#" title="Reports">RT</a>
+					<span class="fp-nav-link" title="Reports">RT</span>
 					<span class="hot-key-hint">2</span>
 				</li>					
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('inputs')" 
 					v-bind:class="{ active: inputs }">
-					<a class="fp-nav-link" href="#" title="Inputs">IN</a>
+					<span class="fp-nav-link" title="Inputs">IN</span>
 					<span class="hot-key-hint">2</span>
 				</li>					
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('outputs')" 
 					v-bind:class="{ active: outputs }">
-					<a class="fp-nav-link" href="#" title="Outputs">OU</a>
+					<span class="fp-nav-link" title="Outputs">OU</span>
 					<span class="hot-key-hint">2</span>
 				</li>				
  				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('projects')" 
 					v-bind:class="{ active: projects }">
-					<a class="fp-nav-link" href="#" title="Projects">PR</a>
+					<span class="fp-nav-link" title="Projects">PR</span>
 					<span class="hot-key-hint">2</span>
 				</li> 				
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('departments')" 
 					v-bind:class="{ active: departments }">
-					<a class="fp-nav-link" href="#" title="Departments">DE</a>
+					<span class="fp-nav-link" title="Departments">DE</span>
 					<span class="hot-key-hint">2</span>
 				</li>	
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('employees')" 
 					v-bind:class="{ active: employees }">
-					<a class="fp-nav-link" href="#" title="Employees">EM</a>
+					<span class="fp-nav-link" title="Employees">EM</span>
 					<span class="hot-key-hint">2</span>
 				</li>
 				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('resources')" 
 					v-bind:class="{ active: resources }">
-					<a class="fp-nav-link" href="#" title="Resources">RE</a>
+					<span class="fp-nav-link" title="Resources">RE</span>
 					<span class="hot-key-hint">2</span>
 				</li> 				
 
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('audits')" 
 					v-bind:class="{ active: audits }">
-					<a class="fp-nav-link" href="#" title="Audits">AU</a>
+					<span class="fp-nav-link" title="Audits">AU</span>
 					<span class="hot-key-hint">4</span>
 				</li>
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('users')" 
 					v-bind:class="{ active: users }">
-					<a class="fp-nav-link" href="#" title="Users">US</a>
+					<span class="fp-nav-link" title="Users">US</span>
 					<span class="hot-key-hint">5</span>
 				</li>				
 				<li class="fp-nav-item fp-nav-item-left" v-on:click="changeRoute('')" 
 					v-bind:class="{ active: logout }">
-					<a class="fp-nav-link" href="#" title="Logout">LO</a>
+					<span class="fp-nav-link" title="Logout">LO</span>
 					<span class="hot-key-hint">5</span>
 				</li>
 			</ul>
@@ -159,6 +159,7 @@ export default {
 				assets: null,
 				reports: null,
 				inputs: null,
+				outputs: null,
 				projects: null,
 				departments: null,
 				employees: null,
@@ -190,18 +191,18 @@ export default {
 						this.inputs = true;
 					} else {
 						this.inputs = false;
+					}					
+					
+					if (this.route == 'Outputs') {
+						this.outputs = true;
+					} else {
+						this.outputs = false;
 					}			
 					
 					if (this.route == 'Reports') {
 						this.reports = true;
 					} else {
 						this.reports = false;
-					}	
-					
-					if (this.route == 'Outputs') {
-						this.outputs = true;
-					} else {
-						this.outputs = false;
 					}	
 					
 					if (this.route == 'Projects') {
