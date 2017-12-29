@@ -114,7 +114,7 @@ export default {
 			this.$router.push('input-edit');
 		},
 		sort(a, b) {
-			let nameA = a.invoiceID, nameB = b.invoiceID;
+			let nameA = +a.invoiceID, nameB = +b.invoiceID;
 			if (nameA < nameB) {
 				return 1
 			}
