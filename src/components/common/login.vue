@@ -39,7 +39,7 @@ export default {
   },
 	created() {
 		appConfig.route = this.route;			
-		appConfig.access_token = null;			
+		localStorage.setItem('access_token', 'login');		
 	},
 	methods: {
 		fetchData() {
@@ -53,6 +53,7 @@ export default {
 				})
 				.then(result => {
 					appConfig.access_token = result.body.token;
+					localStorage.setItem('access_token', result.body.token);
 					this.loading = false;
 					this.error = false;
 					this.$router.push('/assets');

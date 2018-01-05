@@ -34,7 +34,7 @@ import Users from '@/components/users/users';
 import UserEdit from '@/components/users/edit';
 import UserAdd from '@/components/users/add';
 
-import Audits from '@/components/audits/audit';
+import Audits from '@/components/audits/audits';
 import AuditsEdit from '@/components/audits/edit';
 
 export default new Router({

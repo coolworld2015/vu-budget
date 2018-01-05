@@ -32,7 +32,7 @@
   import appConfig from '../../main';
 
   export default {
-    name: 'users-items',
+    name: 'audits-items',
     data() {
       return {
         items: [],
@@ -45,22 +45,27 @@
       }
     },
     created() {
-      this.fetchData();
-      appConfig.$on('searchQuery', searchQuery => {
-        this.searchQuery = searchQuery;
-        let arr = [].concat(appConfig.audits.items);
-        let items = arr.filter((el) => el.name.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1);
-        this.filteredItems = items;
-        this.items = items.slice(0, 20);
-        this.positionY = 0;
-        this.recordsCount = 20;
+		this.fetchData();
+		this.notification = {
+			title: 'Something went wrong',
+			message: 'Server responded with status code error',
+			important: true
+		}
+		appConfig.$on('searchQueryAudits', searchQuery => {
+			this.searchQuery = searchQuery;
+			let arr = [].concat(appConfig.audits.items);
+			let items = arr.filter((el) => el.name.toLowerCase().indexOf(searchQuery.toLowerCase()) != -1);
+			this.filteredItems = items;
+			this.items = items.slice(0, 20);
+			this.positionY = 0;
+			this.recordsCount = 20;
 
-        appConfig.$emit('itemsCount', items.length);
-        if (searchQuery == '') {
-          this.items = appConfig.audits.items.slice(0, 20);
-          this.filteredItems = appConfig.audits.items;
-        }
-      })
+			appConfig.$emit('itemsCount', items.length);
+			if (searchQuery == '') {
+			  this.items = appConfig.audits.items.slice(0, 20);
+			  this.filteredItems = appConfig.audits.items;
+			}
+		})
     },
     methods: {
       fetchData() {
@@ -75,7 +80,9 @@
               document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)
             }, 100);
           }).catch((error) => {
-          this.status = 'error';
+				appConfig.notifications.items.push(this.notification);
+				this.status = 'show';
+				this.$router.push('/login');
         })
       },
       handleScroll() {

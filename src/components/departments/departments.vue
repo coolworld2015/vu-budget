@@ -29,10 +29,12 @@ export default {
     }
   },
 	created() {
-		if (!appConfig.access_token) {
-			this.$router.push('/login');
-		} 	
-		appConfig.route = this.route;			
+		appConfig.getAccessToken();
+		if (appConfig.access_token == 'login') {
+			this.$router.push('login');
+		}
+		
+		appConfig.route = this.route;		
 	},
 	components: {
 		navbar,

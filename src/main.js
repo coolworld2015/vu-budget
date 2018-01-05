@@ -13,7 +13,8 @@ import './assets/css/font-awesome-4.7.0/css/font-awesome.min.css';
 
 const appConfig = new Vue();
 appConfig.URL ='https://jwt-budget.herokuapp.com/api/',
-//appConfig.URL ='http://localhost:3000/api/',
+
+appConfig.getAccessToken = ()=> {appConfig.access_token = localStorage.getItem('access_token');};
 
 appConfig.assets = { items: [] };
 appConfig.inputs = { items: [] };

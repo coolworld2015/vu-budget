@@ -29,16 +29,18 @@ export default {
     }
   },
 	created() {
-		if (!appConfig.access_token) {
-			this.$router.push('/login');
+		appConfig.getAccessToken();
+		if (appConfig.access_token == 'login') {
+			this.$router.push('login');
 		} 
+		
 		appConfig.route = this.route;			
 	},
 	components: {
-		navbar:	navbar,
-		auditsHeader: auditsHeader,
-		auditsItems: auditsItems,
-		auditsFooter: auditsFooter
+		navbar,
+		auditsHeader,
+		auditsItems,
+		auditsFooter
 	}
 }
 </script>
