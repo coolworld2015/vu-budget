@@ -187,6 +187,12 @@ export default {
 						this.assets = false;
 					}					
 					
+					if (this.route == 'Reports') {
+						this.reports = true;
+					} else {
+						this.reports = false;
+					}					
+					
 					if (this.route == 'Inputs') {
 						this.inputs = true;
 					} else {

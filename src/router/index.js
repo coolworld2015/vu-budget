@@ -5,6 +5,7 @@ Vue.use(Router);
 import Login from '@/components/common/login';
 
 import Assets from '@/components/assets/assets';
+import Reports from '@/components/reports/reports';
 
 import Inputs from '@/components/inputs/inputs';
 import InputEdit from '@/components/inputs/edit';
@@ -44,6 +45,8 @@ export default new Router({
     { path: '/login', component: Login },
 	
     { path: '/assets', component: Assets },
+	
+    { path: '/reports', component: Reports },
 	
 	{ path: '/inputs', component: Inputs },
     { path: '/input-edit', component: InputEdit },

@@ -78,6 +78,7 @@ export default {
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
 					this.status = 'show';
+					this.$router.push('login');
 				})
 		},
 		handleScroll() {

@@ -191,6 +191,7 @@ export default {
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
 					this.loading = false;
+					this.$router.push('login');
 				})
 		},		
 		getDepartments() {
@@ -202,6 +203,7 @@ export default {
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
 					this.loading = false;
+					this.$router.push('login');
 				})
 		},		
 		getEmployees() {
@@ -213,6 +215,7 @@ export default {
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
 					this.loading = false;
+					this.$router.push('login');
 				})
 		},		
 		getResources() {
@@ -224,6 +227,7 @@ export default {
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
 					this.loading = false;
+					this.$router.push('login');
 				})
 		},
 		sort(a, b) {

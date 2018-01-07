@@ -7,7 +7,7 @@
 
   <div v-else>
 	<div style="margin: auto; width: 25%; font-size: 22px; font-weight: bold; margin-bottom: 10px;">
-		<div style="text-align: center; padding-right: 40px;">New output</div>
+		<div style="text-align: center; padding-right: 40px;">Reports</div>
 	</div>
     <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
       <fieldset class="sender-data form-section-wrapper">
@@ -23,7 +23,7 @@
    		  
 		  <div class="form-group">
             <label for="senderSurname">Date</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="Date" 
+            <input type="date" class="form-control" id="senderSurname" placeholder="Date" 
 				v-model="date"
 				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.date }">
@@ -124,10 +124,10 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 
 export default {
-	name: 'outputs-add',
+	name: 'inputs-add',
 	data() {
 		return {
-			invoiceID: (appConfig.outputs.items.length + 1).toString(),
+			invoiceID: (appConfig.inputs.items.length + 1).toString(),
 			date: '',
 			price: '',
 			quantity: '',
@@ -180,7 +180,7 @@ export default {
 	},
 	methods: {
 		goBack() {
-			this.$router.push('/outputs');
+			this.$router.push('/inputs');
 		},
 		getProjects() {
 			this.$http.get(appConfig.URL + 'projects/get', {headers: {'Authorization': appConfig.access_token}})
@@ -306,7 +306,7 @@ export default {
 			}
 			
 			this.loading = true;
-			this.$http.post(appConfig.URL + 'outputs/add', {                
+			this.$http.post(appConfig.URL + 'inputs/add', {                
 					id: + new Date,
 					invoiceID: this.invoiceID,
 					date: this.date,
@@ -335,11 +335,11 @@ export default {
 					} else {
 						appConfig.notifications.items.push(this.notification1);
 					}
-					this.$router.push('/outputs');
+					this.$router.push('/inputs');
 				})
 				.catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
-					this.$router.push('/outputs');
+					this.$router.push('/inputs');
 				})
 		},
 		clearWarning() {
