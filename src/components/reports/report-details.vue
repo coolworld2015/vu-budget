@@ -77,10 +77,10 @@ export default {
 					this.inputs = result.data.sort(this.sort).slice(0, 20);
 					this.filteredItems = result.data.sort(this.sort);
 					this.status = 'show';
-					appConfig.$emit('itemsCount', result.data.length);
+					appConfig.$emit('inputsCount', result.data.length);
 					let total = 0;
 					this.inputs.forEach((el) => total += +el.total);
-					appConfig.$emit('total', total);
+					appConfig.$emit('inputsTotal', total);
 					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
@@ -96,10 +96,10 @@ export default {
 					this.outputs = result.data.sort(this.sort).slice(0, 20);
 					this.filteredItems = result.data.sort(this.sort);
 					this.status = 'show';
-					appConfig.$emit('itemsCount', result.data.length);
+					appConfig.$emit('outputsCount', result.data.length);
 					let total = 0;
 					this.outputs.forEach((el) => total += +el.total);
-					appConfig.$emit('total', total);
+					appConfig.$emit('outputsTotal', total);
 					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)

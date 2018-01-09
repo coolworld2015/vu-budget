@@ -4,10 +4,10 @@
 		<div class="content">
 			<main>
 				<section class="search-results">
- 
-					<report-details></report-details>
+					<inputs-header></inputs-header> 
+ 					<report-details></report-details>
 				</section>
- 
+				<inputs-footer></inputs-footer> 
 			</main>
 		</div>
 
@@ -19,7 +19,7 @@ import appConfig from '../../main';
 import navbar from '@/components/common/navbar';
 import inputsHeader from '@/components/inputs/header';
 import reportDetails from '@/components/reports/report-details';
-import inputsFooter from '@/components/inputs/footer';
+import inputsFooter from '@/components/reports/footer';
 
 export default {
   name: 'reports',
