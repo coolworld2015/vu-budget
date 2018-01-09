@@ -12,22 +12,7 @@
     <form class="payment-form payment-form--create d-flex justify-content-stretch" autocomplete="off">
       <fieldset class="sender-data form-section-wrapper">
         <div class="form-section" style="width: 100%;">
-          		  
-		  <div class="form-group">
-            <label for="senderSurname">InvoiceID</label>
-            <input type="text" class="form-control" id="senderSurname" placeholder="InvoiceID" 
-				v-model="invoiceID"
-				v-on:keypress="clearWarning"
-				v-bind:class="{ warning: fieldsErrors.invoiceID }">
-          </div>       
-   		  
-		  <div class="form-group">
-            <label for="senderSurname">Date</label>
-            <input type="date" class="form-control" id="senderSurname" placeholder="Date" 
-				v-model="date"
-				v-on:keypress="clearWarning"
-				v-bind:class="{ warning: fieldsErrors.date }">
-          </div>
+
 		  
 		  <div class="form-group">
             <label for="typeId">Project</label>
@@ -56,60 +41,33 @@
 			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee"
 				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.employee }">
-				<option v-for="option in filteredEmployees" v-bind:value="option.id" v-bind:data-name="option.name">
+				<option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
 			</select>
           </div>  		
-		  
+          		         		  
 		  <div class="form-group">
-            <label for="typeId">Resource</label>
-			<select class="form-control" v-model="resourceID" v-on:change="changeResource"
-				v-bind:class="{ warning: fieldsErrors.resource }">
-				<option v-for="option in resources" v-bind:value="option.id" v-bind:data-name="option.name" v-bind:data-price="option.price">
-				{{ option.name }}
-			  </option>
-			</select>
-          </div>        
-
-          <div class="form-group">
-            <label for="senderName">Price</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Price" 
-				v-model="price"
+            <label for="senderSurname">First Day</label>
+            <input type="date" class="form-control" placeholder="First Day" 
+				v-model="date1"
 				v-on:keypress="clearWarning"
-				v-on:keyup="changeTotal"
-				v-bind:class="{ warning: fieldsErrors.price }">
+				v-bind:class="{ warning: fieldsErrors.date }">
           </div>
-		  
-          <div class="form-group">
-            <label for="senderName">Quantity</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Quantity" 
-				v-model="quantity"
+          		         		  
+		  <div class="form-group">
+            <label for="senderSurname">Last Day</label>
+            <input type="date" class="form-control" id="senderSurname" placeholder="Last Day" 
+				v-model="date2"
 				v-on:keypress="clearWarning"
-				v-on:keyup="changeTotal"
-				v-bind:class="{ warning: fieldsErrors.quantity }">
-          </div>
-
-          <div class="form-group">
-            <label for="senderPatronymic">Description</label>
-            <textarea type="text" class="form-control" id="senderPatronymic1" placeholder="Description" 
-				v-model="description" 
-				v-on:keypress="clearWarning"
-				v-bind:class="{ warning: fieldsErrors.description }"></textarea>
-          </div>
+				v-bind:class="{ warning: fieldsErrors.date }">
+          </div>		  
  		  
-          <div class="form-group" style="margin-bottom: 30px;">
-            <label for="senderName">Total</label>
-            <input type="text" class="form-control" id="senderName" placeholder="Total" 
-				v-model="total"  readonly
-				v-bind:class="{ warning: fieldsErrors.total }">
-          </div>
 		  <div style="font-weight: bold; font-size: 14px; color: #dc3545; margin-top: 15px; text-align: center;">
 		    <span v-show="invalidValue" style="margin-left: 0px;">Value required - please provide.</span>
 		  </div>
 		  <div class="d-flex justify-content-center" style1="margin-top: 30px;">
 			<button class="btn btn-danger" v-on:click="addItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
-			<button class="btn btn-danger" v-on:click="goBack" style="margin: 10px; width: 100px; font-size: 14px;">Back</button>
 		  </div>
  
         </div>
@@ -128,15 +86,16 @@ export default {
 	data() {
 		return {
 			invoiceID: (appConfig.inputs.items.length + 1).toString(),
-			date: '',
+			date1: '2018-01-01',
+			date2: '',
 			price: '',
 			quantity: '',
-			projects: [{id:0, name:'Select project'}],			
+			projects: [{id:0, name:'All projects'}],			
 			projectID: 0,
-			departments: [{id:0, name:'Select department'}],
+			departments: [{id:0, name:'All departments'}],
 			departmentID: 0,			
 			employees: [],
-			filteredEmployees: [{id:0, name:'Select employee'}],
+			filteredEmployees: [{id:0, name:'All employees'}],
 			employeeID: 0,			
 			resources: [{id:0, name:'Select resource'}],
 			resourceID: 0,
@@ -174,9 +133,16 @@ export default {
 			message: `Item was created successfully`
 		}
 		let d = new Date;
-        let todayDate = d.getMonth() + 1 + '/' + (d.getDate()) + '/' + d.getFullYear();
+		let mm = d.getMonth() + 1;
+		let dd = d.getDate();
+		
+		if(dd<10) {	dd='0'+dd; } 
+		if(mm<10) {	mm='0'+mm; } 
+        let todayDate = d.getFullYear() + '-' + mm + '-' + dd;
 		let time = d.toTimeString().split(' ');
-		this.date = todayDate + ' ' + time[0];
+		//this.date = todayDate + ' ' + time[0];
+		this.date2 = todayDate;
+		console.log(this.date2)
 	},
 	methods: {
 		goBack() {
@@ -186,7 +152,7 @@ export default {
 			this.$http.get(appConfig.URL + 'projects/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {			 
 					this.projects = result.data.sort(this.sort);
-					this.projects.unshift({id:0, name:'Select project'});
+					this.projects.unshift({id:0, name:'All projects'});
 					this.loading = false;
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
@@ -198,7 +164,7 @@ export default {
 			this.$http.get(appConfig.URL + 'departments/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {			 
 					this.departments = result.data.sort(this.sort);
-					this.departments.unshift({id:0, name:'Select department'});
+					this.departments.unshift({id:0, name:'All departments'});
 					this.loading = false;
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
@@ -210,7 +176,7 @@ export default {
 			this.$http.get(appConfig.URL + 'employees/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {			 
 					this.employees = result.data.sort(this.sort);
-					//this.employees.unshift({id:0, name:'Select employee'});
+					this.employees.unshift({id:0, name:'All employees'});
 					this.loading = false;
 				}).catch((error)=> {
 					appConfig.notifications.items.push(this.notification);
