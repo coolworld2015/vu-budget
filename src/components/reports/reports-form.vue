@@ -16,9 +16,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Project</label>
-			<select class="form-control" v-model="projectID" v-on:change="changeProject"
-				v-on:keypress="clearWarning"
-				v-bind:class="{ warning: fieldsErrors.project }">
+			<select class="form-control" v-model="projectID" v-on:change="changeProject">
 				<option v-for="option in projects" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
@@ -27,9 +25,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Department</label>
-			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment"
-				v-on:keypress="clearWarning"
-				v-bind:class="{ warning: fieldsErrors.department }">
+			<select class="form-control" v-model="departmentID" v-on:change="changeDepartment">
 				<option v-for="option in departments" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
@@ -38,9 +34,7 @@
 		  
 		  <div class="form-group">
             <label for="typeId">Employee</label>
-			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee"
-				v-on:keypress="clearWarning"
-				v-bind:class="{ warning: fieldsErrors.employee }">
+			<select class="form-control" v-model="employeeID" v-on:change="changeEmployee">
 				<option v-for="option in employees" v-bind:value="option.id" v-bind:data-name="option.name">
 				{{ option.name }}
 			  </option>
@@ -51,7 +45,6 @@
             <label for="senderSurname">First Day</label>
             <input type="date" class="form-control" placeholder="First Day" 
 				v-model="date1"
-				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.date }">
           </div>
           		         		  
@@ -59,7 +52,6 @@
             <label for="senderSurname">Last Day</label>
             <input type="date" class="form-control" id="senderSurname" placeholder="Last Day" 
 				v-model="date2"
-				v-on:keypress="clearWarning"
 				v-bind:class="{ warning: fieldsErrors.date }">
           </div>		  
  		  
@@ -67,7 +59,7 @@
 		    <span v-show="invalidValue" style="margin-left: 0px;">Value required - please provide.</span>
 		  </div>
 		  <div class="d-flex justify-content-center" style1="margin-top: 30px;">
-			<button class="btn btn-danger" v-on:click="addItem" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
+			<button class="btn btn-danger" v-on:click="showDetails" style="margin: 10px; width: 100px; font-size: 14px;">Submit</button>
 		  </div>
  
         </div>
@@ -122,7 +114,6 @@ export default {
 		this.getProjects();
 		this.getDepartments();
 		this.getEmployees();
-		this.getResources();
 		this.notification = {
 			title: 'Something went wrong',
 			message: 'Server responded with status code error',
@@ -139,10 +130,7 @@ export default {
 		if(dd<10) {	dd='0'+dd; } 
 		if(mm<10) {	mm='0'+mm; } 
         let todayDate = d.getFullYear() + '-' + mm + '-' + dd;
-		let time = d.toTimeString().split(' ');
-		//this.date = todayDate + ' ' + time[0];
 		this.date2 = todayDate;
-		console.log(this.date2)
 	},
 	methods: {
 		goBack() {
@@ -183,18 +171,6 @@ export default {
 					this.loading = false;
 					this.$router.push('login');
 				})
-		},		
-		getResources() {
-			this.$http.get(appConfig.URL + 'goods/get', {headers: {'Authorization': appConfig.access_token}})
-				.then(result => {			 
-					this.resources = result.data.sort(this.sort);
-					this.resources.unshift({id:0, name:'Select resource'});
-					this.loading = false;
-				}).catch((error)=> {
-					appConfig.notifications.items.push(this.notification);
-					this.loading = false;
-					this.$router.push('login');
-				})
 		},
 		sort(a, b) {
 			let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
@@ -206,71 +182,11 @@ export default {
 			}
 			return 0;
 		},
+		showDetails(item){
+			appConfig.report = item;
+			this.$router.push('report-details');
+		},
 		addItem() {
-			if (this.invoiceID == '') {
-				this.fieldsErrors.invoiceID = true;
-				this.invalidValue = true;
-			}			
-			
-			if (this.date == '') {
-				this.fieldsErrors.date = true;
-				this.invalidValue = true;
-			}		
-			
-			if (this.price == '') {
-				this.fieldsErrors.price = true;
-				this.invalidValue = true;
-			}				
-			
-			if (this.quantity == '') {
-				this.fieldsErrors.quantity = true;
-				this.invalidValue = true;
-			}				
-			
-			if (this.projectID == 0) {
-				this.fieldsErrors.project = true;
-				this.invalidValue = true;
-			}				
-			
-			if (this.departmentID == 0) {
-				this.fieldsErrors.department = true;
-				this.invalidValue = true;
-			}				
-			
-			if (this.employeeID == 0) {
-				this.fieldsErrors.employee = true;
-				this.invalidValue = true;
-			}				
-			
-			if (this.resourceID == 0) {
-				this.fieldsErrors.resource = true;
-				this.invalidValue = true;
-			}				
-			
-			if (this.description == '') {
-				this.fieldsErrors.description = true;
-				this.invalidValue = true;
-			}			
-			
-			if (this.isNumber(this.price) != true) {
-				this.fieldsErrors.price = true;
-				this.invalidValue = true;
-			}			
-			
-			if (this.isNumber(this.quantity) != true) {
-				this.fieldsErrors.quantity = true;
-				this.invalidValue = true;
-			}			
-			
-			if (this.isNumber(this.sum) != true) {
-				this.fieldsErrors.total = true;
-				this.invalidValue = true;
-			}
-			
-			if (this.invalidValue) {
-				return;
-			}
-			
 			this.loading = true;
 			this.$http.post(appConfig.URL + 'inputs/add', {                
 					id: + new Date,
@@ -308,19 +224,6 @@ export default {
 					this.$router.push('/inputs');
 				})
 		},
-		clearWarning() {
-			this.fieldsErrors.invoiceID = false;
-			this.fieldsErrors.date = false;
-			this.fieldsErrors.price = false;
-			this.fieldsErrors.quantity = false;
-			this.fieldsErrors.project = false;
-			this.fieldsErrors.department = false;
-			this.fieldsErrors.employee = false;
-			this.fieldsErrors.resource = false;
-			this.fieldsErrors.description = false;
-			this.fieldsErrors.total = false;
-			this.invalidValue = false;
-		},
 	    changeProject (e) {
 			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
@@ -331,9 +234,6 @@ export default {
 			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
-				let arrEmployees = [].concat(this.employees);
-				let filteredEmployees = arrEmployees.filter((el) => el.departmentID == e.target.value);
-				this.filteredEmployees = [{id:0, name:'Select employee'}].concat(filteredEmployees);
 			}
 		  },		  
 		  changeEmployee (e) {
@@ -341,21 +241,7 @@ export default {
 			if(e.target.options.selectedIndex > -1) {
 				this.employeeName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
-		  },		  
-		  changeResource (e) {
-			this.clearWarning();
-			if(e.target.options.selectedIndex > -1) {
-				this.resourceName = e.target.options[e.target.options.selectedIndex].dataset.name
-				this.price = ((+e.target.options[e.target.options.selectedIndex].dataset.price).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-			}
-		  },		  
-		  changeTotal (e) {
-			this.sum = (+this.price)*(+this.quantity)
-			this.total = ((+this.sum).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-		  },
-		isNumber(n) {
-			return !isNaN(parseFloat(n)) && isFinite(n);
-		}
+		  }
 	}
 }
 </script>
