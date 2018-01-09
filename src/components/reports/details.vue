@@ -4,7 +4,6 @@
 		<div class="content">
 			<main>
 				<section class="search-results">
-					<inputs-header></inputs-header> 
  					<report-details></report-details>
 				</section>
 				<inputs-footer></inputs-footer> 

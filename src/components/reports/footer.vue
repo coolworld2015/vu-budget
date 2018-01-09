@@ -1,16 +1,6 @@
 <template>
 	<section class="activated-payments d-flex justify-content-start align-items-center shown" id="activatedPayments">
 		<div class="activated-payments-item">
-			<span class="selected-payments" id="activatedPaymentsBox" style="width: 44px;">{{ inputsCount }}</span>
-			Records
-		</div>		
-		
-		<div class="activated-payments-item">
-			<span class="selected-payments" id="activatedPaymentsBox" style="width: 100px; margin-left1: 400px;">{{ inputsTotal }}</span>
-			Inputs
-		</div>			
-		
-		<div class="activated-payments-item">
 			<span class="selected-payments" id="activatedPaymentsBox" style="width: 44px;">{{ outputsCount }}</span>
 			Records
 		</div>		
@@ -19,6 +9,16 @@
 			<span class="selected-payments" id="activatedPaymentsBox" style="width: 100px; margin-left1: 400px;">{{ outputsTotal }}</span>
 			Outputs
 		</div>		
+		
+		<div class="activated-payments-item">
+			<span class="selected-payments" id="activatedPaymentsBox" style="width: 44px;">{{ inputsCount }}</span>
+			Records
+		</div>		
+		
+		<div class="activated-payments-item">
+			<span class="selected-payments" id="activatedPaymentsBox" style="width: 100px; margin-left1: 400px;">{{ inputsTotal }}</span>
+			Inputs
+		</div>	
 		
 		<div class="activated-payments-item">
 			<span class="selected-payments" id="activatedPaymentsBox" style="width: 100px; margin-left1: 400px;">{{ total }}</span>

@@ -7,31 +7,28 @@
   </div>
 
   <div v-else-if="status === 'show'" class="search-results-content">
-	<div style="border-style: groove; float: left; width: 49%; margin:1px;">
-    <div class="payment" v-for="item in inputs" v-on:click="showDetails(item)">
-		  <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
-
-		  <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
-		  <div class="search-results-item search-results-sender" style="width: 20%; right: 15px;">{{ item.project }}</div>
-		  <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
-		  <div class="search-results-item search-results-sender" style="width: 20%; right: 10px;">{{ item.description }}</div>
-		  <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
-
-	</div> 
-	</div>    
-	
-	<div style="border-style: groove; float: left; width: 49%; margin:1px;">
+	<div style="border-style: groove; float: left; width: 49%; margin:2px;">
 	<div class="payment" v-for="item in outputs" v-on:click="showDetails(item)">
       <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
-
       <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
       <div class="search-results-item search-results-sender" style="width: 20%; right: 15px;">{{ item.project }}</div>
       <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
       <div class="search-results-item search-results-sender" style="width: 20%; right: 10px;">{{ item.description }}</div>
       <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
-	
 	</div>
     </div>
+	
+	<div style="position: absolute; top: -5px; width: 95%; text-align: center; font-size: 22px; font-weight: bold;">Reports</div>
+	<div style="border-style: groove; float: left; width: 49%; margin:2px;">
+    <div class="payment" v-for="item in inputs" v-on:click="showDetails(item)">
+		  <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
+		  <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
+		  <div class="search-results-item search-results-sender" style="width: 20%; right: 15px;">{{ item.project }}</div>
+		  <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
+		  <div class="search-results-item search-results-sender" style="width: 20%; right: 10px;">{{ item.description }}</div>
+		  <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+	</div> 
+	</div> 	
   </div>
 
   <div v-else-if="status === 'error'">
@@ -52,7 +49,8 @@ export default {
 	  return {
 		inputs: [],
 		outputs: [],
-		filteredItems: [],
+		filteredInputs: [],
+		filteredOutputs: [],
 		recordsCount: 20,
 		positionY: 0,
 		status: 'loading',
@@ -75,13 +73,13 @@ export default {
 				.then(result => {
 					appConfig.inputs.items = result.data.sort(this.sort);
 					this.inputs = result.data.sort(this.sort).slice(0, 20);
-					this.filteredItems = result.data.sort(this.sort);
+					this.filteredInputs = result.data.sort(this.sort);
 					this.status = 'show';
 					appConfig.$emit('inputsCount', result.data.length);
 					let total = 0;
 					this.inputs.forEach((el) => total += +el.total);
 					appConfig.$emit('inputsTotal', total);
-					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)}, 100);
+					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.inputsScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
 					appConfig.notifications.items.push(this.notification);
@@ -94,13 +92,13 @@ export default {
 				.then(result => {
 					appConfig.outputs.items = result.data.sort(this.sort);
 					this.outputs = result.data.sort(this.sort).slice(0, 20);
-					this.filteredItems = result.data.sort(this.sort);
+					this.filteredOutputs = result.data.sort(this.sort);
 					this.status = 'show';
 					appConfig.$emit('outputsCount', result.data.length);
 					let total = 0;
 					this.outputs.forEach((el) => total += +el.total);
 					appConfig.$emit('outputsTotal', total);
-					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.handleScroll)}, 100);
+					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.outputsScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
 					appConfig.notifications.items.push(this.notification);
@@ -108,15 +106,28 @@ export default {
 					this.$router.push('login');
 				})
 		},
-		handleScroll() {
+		inputsScroll() {
 			var position = document.querySelector('.search-results-content').scrollTop;
 			var items, positionY, recordsCount;
 			recordsCount = this.recordsCount;
 			positionY = this.positionY;
-			items = this.filteredItems.slice(0, recordsCount);
+			items = this.filteredInputs.slice(0, recordsCount);
 			
 			if (position > positionY) {
-				this.items = items;
+				this.inputs = items;
+				this.recordsCount = recordsCount + 10;
+				this.positionY = positionY + 400;
+			}
+		},
+		outputsScroll() {
+			var position = document.querySelector('.search-results-content').scrollTop;
+			var items, positionY, recordsCount;
+			recordsCount = this.recordsCount;
+			positionY = this.positionY;
+			items = this.filteredOutputs.slice(0, recordsCount);
+			
+			if (position > positionY) {
+				this.outputs = items;
 				this.recordsCount = recordsCount + 10;
 				this.positionY = positionY + 400;
 			}
