@@ -159,8 +159,8 @@ export default {
 			}
 		},			
 		showDetails(item){
-			appConfig.input = item;
-			this.$router.push('input-edit');
+			appConfig.report = item;
+			this.$router.push('report-edit');
 		},
 		sort(a, b) {
 			let nameA = +a.invoiceID, nameB = +b.invoiceID;
