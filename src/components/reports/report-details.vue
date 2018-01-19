@@ -6,27 +6,28 @@
     </div>
   </div>
 
-  <div v-else-if="status === 'show'" class="search-results-content">
+  <div v-else-if="status === 'show'" class="search-results-content" style="padding-top: 0px;">
 	<div style="border-style: groove; float: left; width: 49%; margin:2px;">
 	<div class="payment" v-for="item in outputs" v-on:click="showDetails(item)">
-      <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
-      <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
-      <div class="search-results-item search-results-sender" style="width: 20%; right: 15px;">{{ item.project }}</div>
-      <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
-      <div class="search-results-item search-results-sender" style="width: 20%; right: 10px;">{{ item.description }}</div>
-      <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+<!--  <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div> -->
+      <div class="search-results-item search-results-sender" style="width: 10%;">{{ item.invoiceID }}</div>
+      <div class="search-results-item search-results-sender" style="width: 25%; right: 15px;">{{ item.project }}</div>
+      <div class="search-results-item search-results-sender" style="width: 25%; right: 40px;">{{ item.date }}</div>
+      <div class="search-results-item search-results-sender" style="width: 25%; right: 10px;">{{ item.description }}</div>
+      <div class="search-results-item search-results-transfer" style="width: 15%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
 	</div>
     </div>
 	
-	<div style="position: absolute; top: -5px; width: 95%; text-align: center; font-size: 22px; font-weight: bold;">Reports</div>
+	<div style="position: absolute; top: -45px; width: 95%; text-align: center; font-size: 22px; font-weight: bold;">Reports</div>
+	
 	<div style="border-style: groove; float: left; width: 49%; margin:2px;">
     <div class="payment" v-for="item in inputs" v-on:click="showDetails(item)">
-		  <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div>
-		  <div class="search-results-item search-results-sender" style="width: 15%;">{{ item.invoiceID }}</div>
-		  <div class="search-results-item search-results-sender" style="width: 20%; right: 15px;">{{ item.project }}</div>
-		  <div class="search-results-item search-results-sender" style="width: 20%; right: 40px;">{{ item.date }}</div>
-		  <div class="search-results-item search-results-sender" style="width: 20%; right: 10px;">{{ item.description }}</div>
-		  <div class="search-results-item search-results-transfer" style="width: 20%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
+<!--  <div class="search-results-item search-results-choose" style="width: 5%;"><span class="circle"></span></div> -->
+		  <div class="search-results-item search-results-sender" style="width: 10%;">{{ item.invoiceID }}</div>
+		  <div class="search-results-item search-results-sender" style="width: 25%; right: 15px;">{{ item.project }}</div>
+		  <div class="search-results-item search-results-sender" style="width: 25%; right: 40px;">{{ item.date }}</div>
+		  <div class="search-results-item search-results-sender" style="width: 25%; right: 10px;">{{ item.description }}</div>
+		  <div class="search-results-item search-results-transfer" style="width: 15%;">{{((+item.total).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")}}</div>
 	</div> 
 	</div> 	
   </div>
@@ -51,7 +52,8 @@ export default {
 		outputs: [],
 		filteredInputs: [],
 		filteredOutputs: [],
-		recordsCount: 20,
+		recordsCountInputs: 20,
+		recordsCountOutputs: 20,
 		positionY: 0,
 		status: 'loading',
 		clicked: false
@@ -74,12 +76,12 @@ export default {
 					appConfig.inputs.items = result.data.sort(this.sort);
 					this.inputs = result.data.sort(this.sort).slice(0, 20);
 					this.filteredInputs = result.data.sort(this.sort);
-					this.status = 'show';
+					//this.status = 'show';
 					appConfig.$emit('inputsCount', result.data.length);
 					let total = 0;
 					this.inputs.forEach((el) => total += +el.total);
 					appConfig.$emit('inputsTotal', total);
-					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.inputsScroll)}, 100);
+					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.onScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
 					appConfig.notifications.items.push(this.notification);
@@ -98,7 +100,7 @@ export default {
 					let total = 0;
 					this.outputs.forEach((el) => total += +el.total);
 					appConfig.$emit('outputsTotal', total);
-					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.outputsScroll)}, 100);
+					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.onScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
 					appConfig.notifications.items.push(this.notification);
@@ -106,29 +108,46 @@ export default {
 					this.$router.push('login');
 				})
 		},
+		onScroll() {		
+			var position = document.querySelector('.search-results-content').scrollTop;
+			var items, items1, positionY, recordsCount, recordsCount1;
+			recordsCount = this.recordsCountOutputs;
+			recordsCount1 = this.recordsCountInputs;
+			positionY = this.positionY;
+			items = this.filteredOutputs.slice(0, recordsCount);
+			items1 = this.filteredInputs.slice(0, recordsCount1);
+
+			if (position > positionY) {
+				this.inputs = items1;
+				this.outputs = items;
+				this.recordsCountOutputs = recordsCount + 10;
+				this.recordsCountInputs = recordsCount1 + 10;
+				this.positionY = positionY + 400;
+			}
+		},
 		inputsScroll() {
 			var position = document.querySelector('.search-results-content').scrollTop;
 			var items, positionY, recordsCount;
-			recordsCount = this.recordsCount;
+			recordsCount = this.recordsCountInputs;
 			positionY = this.positionY;
 			items = this.filteredInputs.slice(0, recordsCount);
 			
 			if (position > positionY) {
 				this.inputs = items;
-				this.recordsCount = recordsCount + 10;
+				this.recordsCountInputs = recordsCount + 10;
 				this.positionY = positionY + 400;
 			}
 		},
 		outputsScroll() {
 			var position = document.querySelector('.search-results-content').scrollTop;
 			var items, positionY, recordsCount;
-			recordsCount = this.recordsCount;
+			recordsCount = this.recordsCountOutputs;
 			positionY = this.positionY;
 			items = this.filteredOutputs.slice(0, recordsCount);
 			
 			if (position > positionY) {
 				this.outputs = items;
-				this.recordsCount = recordsCount + 10;
+				this.recordsCountOutputs = recordsCount + 10;
 				this.positionY = positionY + 400;
 			}
 		},
