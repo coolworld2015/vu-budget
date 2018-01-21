@@ -7,8 +7,8 @@ import Login from '@/components/common/login';
 import Assets from '@/components/assets/assets';
 
 import Reports from '@/components/reports/reports';
+import ReportResults from '@/components/reports/results';
 import ReportDetails from '@/components/reports/details';
-import ReportEdit from '@/components/reports/edit';
 
 import Inputs from '@/components/inputs/inputs';
 import InputEdit from '@/components/inputs/edit';
@@ -50,8 +50,8 @@ export default new Router({
     { path: '/assets', component: Assets },
 	
     { path: '/reports', component: Reports },
+    { path: '/report-results', component: ReportResults },
     { path: '/report-details', component: ReportDetails },
-    { path: '/report-edit', component: ReportEdit },
 	
 	{ path: '/inputs', component: Inputs },
     { path: '/input-edit', component: InputEdit },

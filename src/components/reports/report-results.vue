@@ -45,7 +45,7 @@ import Vue from 'vue';
 import appConfig from '../../main';
 
 export default {
-	name: 'report-details',
+	name: 'report-results',
 	data() {
 	  return {
 		inputs: [],
@@ -160,7 +160,7 @@ export default {
 		},			
 		showDetails(item){
 			appConfig.report = item;
-			this.$router.push('report-edit');
+			this.$router.push('report-details');
 		},
 		sort(a, b) {
 			let nameA = +a.invoiceID, nameB = +b.invoiceID;

@@ -133,9 +133,6 @@ export default {
 		this.date2 = todayDate;
 	},
 	methods: {
-		goBack() {
-			this.$router.push('/inputs');
-		},
 		getProjects() {
 			this.$http.get(appConfig.URL + 'projects/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {			 
@@ -184,7 +181,7 @@ export default {
 		},
 		showDetails(item){
 			appConfig.report = item;
-			this.$router.push('report-details');
+			this.$router.push('report-results');
 		},
 		addItem() {
 			this.loading = true;

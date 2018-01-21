@@ -162,7 +162,7 @@ export default {
 			}
 		},
 		goBack() {
-			this.$router.push('/report-details');
+			this.$router.push('/report-results');
 		} 
 	}
 }
