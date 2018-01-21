@@ -84,11 +84,14 @@ export default {
 			quantity: '',
 			projects: [{id:0, name:'All projects'}],			
 			projectID: 0,
+			projectName: 'All projects',
 			departments: [{id:0, name:'All departments'}],
-			departmentID: 0,			
+			departmentID: 0,
+			departmentName: 'All departments',
 			employees: [],
 			filteredEmployees: [{id:0, name:'All employees'}],
-			employeeID: 0,			
+			employeeID: 0,
+			employeeName: 'All employees',
 			resources: [{id:0, name:'Select resource'}],
 			resourceID: 0,
 			description: '',
@@ -179,8 +182,15 @@ export default {
 			}
 			return 0;
 		},
-		showDetails(item){
-			appConfig.report = item;
+		showDetails(){
+			let report = {
+				startDate: this.date1,
+				endDate: this.date2,
+				projectName: this.projectName,
+				departmentName: this.departmentName,
+				employeeName: this.employeeName,
+			}
+			appConfig.report = report;
 			this.$router.push('report-results');
 		},
 		addItem() {
@@ -222,19 +232,16 @@ export default {
 				})
 		},
 	    changeProject (e) {
-			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.projectName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
 		  },	    
 		  changeDepartment (e) {
-			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.departmentName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}
 		  },		  
 		  changeEmployee (e) {
-			this.clearWarning();
 			if(e.target.options.selectedIndex > -1) {
 				this.employeeName = e.target.options[e.target.options.selectedIndex].dataset.name
 			}

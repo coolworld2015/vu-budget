@@ -56,7 +56,12 @@ export default {
 		recordsCountOutputs: 20,
 		positionY: 0,
 		status: 'loading',
-		clicked: false
+		clicked: false,
+		startDate: appConfig.report.startDate,
+		endDate: appConfig.report.endDate,
+		projectName: appConfig.report.projectName,
+		departmentName: appConfig.report.departmentName,
+		employeeName: appConfig.report.employeeName
 	  }
 	},
 	created() {
@@ -73,11 +78,32 @@ export default {
 		getInputs() {
 			this.$http.get(appConfig.URL + 'inputs/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {
-					appConfig.inputs.items = result.data.sort(this.sort);
-					this.inputs = result.data.sort(this.sort).slice(0, 20);
-					this.filteredInputs = result.data.sort(this.sort);
-					//this.status = 'show';
-					appConfig.$emit('inputsCount', result.data.length);
+					let itemsDate, itemsProject, itemsDepartment, itemsEmployee, items;
+					
+					itemsDate = [].concat(result.data.sort(this.sort));
+					itemsDate = itemsDate.filter((el) => this.dateCheck(this.startDate, this.endDate, el.date.split(' ')[0]));
+					
+					itemsProject = [].concat(itemsDate);	
+					if (this.projectName != 'All projects') {
+						itemsProject = itemsDate.filter((el) => el.project.toLowerCase() == this.projectName.toLowerCase());
+					}	
+						
+					itemsDepartment = [].concat(itemsProject);
+					if (this.departmentName != 'All departments') {
+						itemsDepartment = itemsProject.filter((el) => el.department.toLowerCase() == this.departmentName.toLowerCase());
+					}					
+					
+					itemsEmployee = [].concat(itemsDepartment);
+					if (this.employeeName != 'All employees') {
+						itemsEmployee = itemsDepartment.filter((el) => el.employee.toLowerCase() == this.employeeName.toLowerCase());
+					}
+					
+					items = itemsEmployee;
+					appConfig.inputs.items = items;
+					this.inputs = items.slice(0, 20);
+					this.filteredInputs = items;
+					
+					appConfig.$emit('inputsCount', items.length);
 					let total = 0;
 					this.inputs.forEach((el) => total += +el.total);
 					appConfig.$emit('inputsTotal', total);
@@ -92,10 +118,32 @@ export default {
 		getOutputs() {
 			this.$http.get(appConfig.URL + 'outputs/get', {headers: {'Authorization': appConfig.access_token}})
 				.then(result => {
-					appConfig.outputs.items = result.data.sort(this.sort);
-					this.outputs = result.data.sort(this.sort).slice(0, 20);
-					this.filteredOutputs = result.data.sort(this.sort);
+					let itemsDate, itemsProject, itemsDepartment, itemsEmployee, items;
+					
+					itemsDate = [].concat(result.data.sort(this.sort));
+					itemsDate = itemsDate.filter((el) => this.dateCheck(this.startDate, this.endDate, el.date.split(' ')[0]));
+					
+					itemsProject = [].concat(itemsDate);	
+					if (this.projectName != 'All projects') {
+						itemsProject = itemsDate.filter((el) => el.project.toLowerCase() == this.projectName.toLowerCase());
+					}	
+						
+					itemsDepartment = [].concat(itemsProject);
+					if (this.departmentName != 'All departments') {
+						itemsDepartment = itemsProject.filter((el) => el.department.toLowerCase() == this.departmentName.toLowerCase());
+					}					
+					
+					itemsEmployee = [].concat(itemsDepartment);
+					if (this.employeeName != 'All employees') {
+						itemsEmployee = itemsDepartment.filter((el) => el.employee.toLowerCase() == this.employeeName.toLowerCase());
+					}
+					
+					items = itemsEmployee;
+					appConfig.outputs.items = items;
+					this.outputs = items.slice(0, 20);
+					this.filteredOutputs = items;
 					this.status = 'show';
+					
 					appConfig.$emit('outputsCount', result.data.length);
 					let total = 0;
 					this.outputs.forEach((el) => total += +el.total);
@@ -108,9 +156,17 @@ export default {
 					this.$router.push('login');
 				})
 		},
+		dateCheck(dateFrom, dateTo, dateCheck) {
+			let start = Date.parse(dateFrom);
+			let end = Date.parse(dateTo);
+			let check = Date.parse(dateCheck );
+			if((check <= end && check >= start)) {
+				return true;
+			}
+		},
 		onScroll() {		
-			var position = document.querySelector('.search-results-content').scrollTop;
-			var items, items1, positionY, recordsCount, recordsCount1;
+			let position = document.querySelector('.search-results-content').scrollTop;
+			let items, items1, positionY, recordsCount, recordsCount1;
 			recordsCount = this.recordsCountOutputs;
 			recordsCount1 = this.recordsCountInputs;
 			positionY = this.positionY;
