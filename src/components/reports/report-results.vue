@@ -107,7 +107,7 @@ export default {
 					let total = 0;
 					this.inputs.forEach((el) => total += +el.total);
 					appConfig.$emit('inputsTotal', total);
-					setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.onScroll)}, 100);
+					//setTimeout(()=>{document.querySelector('.search-results-content').addEventListener('scroll', this.onScroll)}, 100);
 				}).catch((error)=> {
 				console.log(error)
 					appConfig.notifications.items.push(this.notification);
@@ -157,9 +157,9 @@ export default {
 				})
 		},
 		dateCheck(dateFrom, dateTo, dateCheck) {
-			let start = Date.parse(dateFrom);
+			let start = Date.parse(dateFrom) - 86400000;
 			let end = Date.parse(dateTo);
-			let check = Date.parse(dateCheck );
+			let check = Date.parse(dateCheck);
 			if((check <= end && check >= start)) {
 				return true;
 			}
