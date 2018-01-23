@@ -183,14 +183,14 @@ export default {
 			return 0;
 		},
 		showDetails(){
-			let report = {
+			let reports = {
 				startDate: this.date1,
 				endDate: this.date2,
 				projectName: this.projectName,
 				departmentName: this.departmentName,
 				employeeName: this.employeeName,
 			}
-			appConfig.report = report;
+			appConfig.reports = reports;
 			this.$router.push('report-results');
 		},
 		addItem() {

@@ -57,22 +57,25 @@ export default {
 		positionY: 0,
 		status: 'loading',
 		clicked: false,
-		startDate: appConfig.report.startDate,
-		endDate: appConfig.report.endDate,
-		projectName: appConfig.report.projectName,
-		departmentName: appConfig.report.departmentName,
-		employeeName: appConfig.report.employeeName
+		startDate: appConfig.reports.startDate,
+		endDate: appConfig.reports.endDate,
+		projectName: appConfig.reports.projectName,
+		departmentName: appConfig.reports.departmentName,
+		employeeName: appConfig.reports.employeeName
 	  }
 	},
 	created() {
-		this.getInputs();
-		this.getOutputs()
-		
-		this.notification = {
-			title: 'Something went wrong',
-			message: 'Server responded with status code error',
-			important: true
-		}
+		if (!appConfig.reports) {
+				this.$router.push('/reports');
+			} else {
+				this.getInputs();
+				this.getOutputs();
+				this.notification = {
+					title: 'Something went wrong',
+					message: 'Server responded with status code error',
+					important: true
+				}
+			}
 	},
 	methods: {
 		getInputs() {
