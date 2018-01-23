@@ -6,18 +6,19 @@
 				Outputs: {{ outputsTotal }} ({{ outputsCount }})
 			</span>
 		</div>		
- 	
-		<div class="activated-payments-item">
-			<span class="selected-payments" id="activatedPaymentsBox" style="width: 200px; font-weight: bold;">
-				Inputs: {{ inputsTotal }} ({{ inputsCount }})
-			</span>
-		</div>	
 		
 		<div class="activated-payments-item">
 			<span class="selected-payments" id="activatedPaymentsBox" style="width: 200px; font-weight: bold;">
 				Total: {{ total }}
 			</span>
+		</div>
+		
+		<div class="activated-payments-item">
+			<span class="selected-payments" id="activatedPaymentsBox" style="width: 200px; font-weight: bold;">
+				Inputs: {{ inputsTotal }} ({{ inputsCount }})
+			</span>
 		</div>	
+
 
 	</section>	
 </template>
